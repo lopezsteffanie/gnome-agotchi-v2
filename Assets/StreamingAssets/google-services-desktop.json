@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "1078063208578",
+    "project_id": "gnomagotchi",
+    "storage_bucket": "gnomagotchi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078063208578:android:5783480b671e307e5bbc9b",
+        "android_client_info": {
+          "package_name": "com.steviecodesit.gnomagotchi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078063208578-lgqh21880ena7gbjdbgo3elv2n5nedf6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4MR35UtAUOT5Mlto1BbFDcHxNRf8VXfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078063208578-lgqh21880ena7gbjdbgo3elv2n5nedf6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1078063208578-s6bhdb4p0qsu9aoe6lj14ajho6jq1j84.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.steviecodesit.gnomagotchi"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078063208578:android:2d31aba29d6652fd5bbc9b",
+        "android_client_info": {
+          "package_name": "com.steviecodesit.gnomagotchigame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078063208578-lgqh21880ena7gbjdbgo3elv2n5nedf6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4MR35UtAUOT5Mlto1BbFDcHxNRf8VXfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078063208578-lgqh21880ena7gbjdbgo3elv2n5nedf6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1078063208578-s6bhdb4p0qsu9aoe6lj14ajho6jq1j84.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.steviecodesit.gnomagotchi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
