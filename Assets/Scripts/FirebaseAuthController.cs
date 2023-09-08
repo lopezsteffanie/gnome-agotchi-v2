@@ -1,26 +1,22 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Firebase;
 using Firebase.Auth;
-using System;
-using System.Threading.Tasks;
 using Firebase.Extensions;
 
-public class FirebaseController : MonoBehaviour
+public class FirebaseAuthController : MonoBehaviour
 {
+    public DatabaseManager databaseManager;
 
     public GameObject loginPanel, signupPanel, profilePanel, forgetPasswordPanel, notificationPanel;
-
     public TMP_InputField loginEmail, loginPassword, signupEmail, signupPassword, signupCPassword, signupUserName, forgetPassEmail;
-
     public TextMeshProUGUI notifTitleText, notifMessageText, profileUserNameText, profileUserEmailText;
     
     Firebase.Auth.FirebaseAuth auth;
     Firebase.Auth.FirebaseUser user;
-
     bool isSignIn = false;
     bool isSigned = false;
 
@@ -30,19 +26,30 @@ public class FirebaseController : MonoBehaviour
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
-                // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.
                 InitializeFirebase();
-
-                // Set a flag here to indicate whether Firebase is ready to use by your app.
             }
             else
             {
-                UnityEngine.Debug.LogError(System.String.Format(
-                "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                // Firebase Unity SDK is not safe to use here.
+                UnityEngine.Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
             }
         });
+    }
+
+    private void Update()
+    {
+        if (isSignIn && !isSigned)
+        {
+            isSigned = true;
+            profileUserNameText.text = "" + user.DisplayName;
+            profileUserEmailText.text = "" + user.Email;
+            OpenProfilePanel();
+        }
+    }
+
+    public void OnDestroy()
+    {
+        auth.StateChanged -= AuthStateChanged;
+        auth = null;
     }
 
     public void OpenLoginPanel()
@@ -61,14 +68,6 @@ public class FirebaseController : MonoBehaviour
         forgetPasswordPanel.SetActive(false);
     }
 
-    public void OpenProfilePanel()
-    {
-        loginPanel.SetActive(false);
-        signupPanel.SetActive(false);
-        profilePanel.SetActive(true);
-        forgetPasswordPanel.SetActive(false);
-    }
-
     public void OpenForgetPasswordPanel()
     {
         loginPanel.SetActive(false);
@@ -81,18 +80,20 @@ public class FirebaseController : MonoBehaviour
     {
         if (string.IsNullOrEmpty(loginEmail.text) && string.IsNullOrEmpty(loginPassword.text))
         {
-            showNotificationMessage("Error", "Fields Empty! Please Input Details in All Fields");
+            ShowNotificationMessage("Error", "Fields Empty! Please Input Details in All Fields");
             return;
         }
 
         SignInUser(loginEmail.text, loginPassword.text);
+        loginEmail.text = "";
+        loginPassword.text = "";
     }
 
     public void SignUpUser()
     {
         if (string.IsNullOrEmpty(signupEmail.text) && string.IsNullOrEmpty(signupPassword.text) && string.IsNullOrEmpty(signupCPassword.text) && string.IsNullOrEmpty(signupUserName.text))
         {
-            showNotificationMessage("Error", "Fields Empty! Please Input Details in All Fields");
+            ShowNotificationMessage("Error", "Fields Empty! Please Input Details in All Fields");
             return;
         }
 
@@ -103,7 +104,7 @@ public class FirebaseController : MonoBehaviour
     {
         if (string.IsNullOrEmpty(forgetPassEmail.text))
         {
-            showNotificationMessage("Error", "Fields Empty! Please Input Details in All Fields");
+            ShowNotificationMessage("Error", "Fields Empty! Please Input Details in All Fields");
             return;
         }
 
@@ -126,39 +127,6 @@ public class FirebaseController : MonoBehaviour
         OpenLoginPanel();
     }
 
-    public void CreateUser(string email, string password, string username) {
-        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task => { 
-            if (task.IsCanceled)
-            {
-                Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-                
-                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
-                {
-                    Firebase.FirebaseException firebaseEx = exception as Firebase.FirebaseException;
-                    if (firebaseEx != null)
-                    {
-                        var errorCode = (AuthError) firebaseEx.ErrorCode;
-                        showNotificationMessage("Error", GetErrorMessage(errorCode));
-                    }
-                }
-
-                return;
-            }
-
-            // Firebase user has been created.
-            Firebase.Auth.AuthResult result = task.Result;
-            Debug.LogFormat("Firebase user created successfully: {0} ({1})",
-                result.User.DisplayName, result.User.UserId);
-
-            UpdateUserProfile(username);
-        });
-    }
-
     public void SignInUser(string email, string password)
     {
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task => {
@@ -177,7 +145,7 @@ public class FirebaseController : MonoBehaviour
                     if (firebaseEx != null)
                     {
                         var errorCode = (AuthError) firebaseEx.ErrorCode;
-                        showNotificationMessage("Error", GetErrorMessage(errorCode));
+                        ShowNotificationMessage("Error", GetErrorMessage(errorCode));
                     }
                 }
 
@@ -194,14 +162,14 @@ public class FirebaseController : MonoBehaviour
         });
     }
 
-    public void InitializeFirebase()
+    private void InitializeFirebase()
     {
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         auth.StateChanged += AuthStateChanged;
         AuthStateChanged(this, null);
     }
 
-    public void AuthStateChanged(object sender, System.EventArgs eventArgs)
+    private void AuthStateChanged(object sender, System.EventArgs eventArgs)
     {
         if (auth.CurrentUser != user)
         {
@@ -220,10 +188,41 @@ public class FirebaseController : MonoBehaviour
         }
     }
 
-    public void OnDestroy()
-    {
-        auth.StateChanged -= AuthStateChanged;
-        auth = null;
+    private void CreateUser(string email, string password, string username) {
+        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task => { 
+            if (task.IsCanceled)
+            {
+                Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                
+                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
+                {
+                    Firebase.FirebaseException firebaseEx = exception as Firebase.FirebaseException;
+                    if (firebaseEx != null)
+                    {
+                        var errorCode = (AuthError) firebaseEx.ErrorCode;
+                        ShowNotificationMessage("Error", GetErrorMessage(errorCode));
+                    }
+                }
+
+                return;
+            }
+            // Firebase user has been created.
+            Firebase.Auth.AuthResult result = task.Result;
+            Debug.LogFormat("Firebase user created successfully: {0} ({1})", username, result.User.UserId);
+
+            UpdateUserProfile(username);
+
+            profileUserNameText.text = username;
+            profileUserEmailText.text = result.User.Email;
+            OpenProfilePanel();
+            ShowNotificationMessage("Alert", "Account Successfully Created");
+            databaseManager.CreateNewUser(username, result.User.Email, result.User.UserId);
+        });
     }
 
     private void UpdateUserProfile(string userName)
@@ -249,27 +248,19 @@ public class FirebaseController : MonoBehaviour
                 }
 
                 Debug.Log("User profile updated successfully.");
-
-                showNotificationMessage("Alert", "Account Successfully Created");
             });
         }
     }
 
-    public void Update()
+    private void OpenProfilePanel()
     {
-        if (isSignIn)
-        {
-            if (!isSigned)
-            {
-                isSigned = true;
-                profileUserNameText.text = "" + user.DisplayName;
-                profileUserEmailText.text = "" + user.Email;
-                OpenProfilePanel();
-            }
-        }
+        loginPanel.SetActive(false);
+        signupPanel.SetActive(false);
+        profilePanel.SetActive(true);
+        forgetPasswordPanel.SetActive(false);
     }
 
-    private void showNotificationMessage(string title, string message)
+    private void ShowNotificationMessage(string title, string message)
     {
         notifTitleText.text = "" + title;
         notifMessageText.text = "" + message;
@@ -326,11 +317,13 @@ public class FirebaseController : MonoBehaviour
                     if (firebaseEx != null)
                     {
                         var errorCode = (AuthError) firebaseEx.ErrorCode;
-                        showNotificationMessage("Error", GetErrorMessage(errorCode));
+                        ShowNotificationMessage("Error", GetErrorMessage(errorCode));
                     }
                 }
             }
-            showNotificationMessage("Alert", "Successfully sent email for resetting your password");
+            OpenLoginPanel();
+            forgetPassEmail.text = "";
+            ShowNotificationMessage("Alert", "Successfully sent email for resetting your password");
         });
     } 
 }
