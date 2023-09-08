@@ -107,7 +107,7 @@ public class FirebaseController : MonoBehaviour
             return;
         }
 
-        // TODO: ForgetPass
+        forgetPasswordSubmit(forgetPassEmail.text);
     }
 
     public void CloseNotifPanel()
@@ -128,12 +128,25 @@ public class FirebaseController : MonoBehaviour
 
     public void CreateUser(string email, string password, string username) {
         auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task => { 
-            if (task.IsCanceled) {
+            if (task.IsCanceled)
+            {
                 Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
                 return;
             }
-            if (task.IsFaulted) {
+            if (task.IsFaulted)
+            {
                 Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                
+                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
+                {
+                    Firebase.FirebaseException firebaseEx = exception as Firebase.FirebaseException;
+                    if (firebaseEx != null)
+                    {
+                        var errorCode = (AuthError) firebaseEx.ErrorCode;
+                        showNotificationMessage("Error", GetErrorMessage(errorCode));
+                    }
+                }
+
                 return;
             }
 
@@ -149,12 +162,25 @@ public class FirebaseController : MonoBehaviour
     public void SignInUser(string email, string password)
     {
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task => {
-            if (task.IsCanceled) {
+            if (task.IsCanceled)
+            {
                 Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
                 return;
             }
-            if (task.IsFaulted) {
+            if (task.IsFaulted)
+            {
                 Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+
+                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
+                {
+                    Firebase.FirebaseException firebaseEx = exception as Firebase.FirebaseException;
+                    if (firebaseEx != null)
+                    {
+                        var errorCode = (AuthError) firebaseEx.ErrorCode;
+                        showNotificationMessage("Error", GetErrorMessage(errorCode));
+                    }
+                }
+
                 return;
             }
 
@@ -200,7 +226,7 @@ public class FirebaseController : MonoBehaviour
         auth = null;
     }
 
-    public void UpdateUserProfile(string userName)
+    private void UpdateUserProfile(string userName)
     {
         Firebase.Auth.FirebaseUser user = auth.CurrentUser;
         if (user != null)
@@ -211,11 +237,13 @@ public class FirebaseController : MonoBehaviour
                 PhotoUrl = new System.Uri("https://picsum.photos/200"),
             };
             user.UpdateUserProfileAsync(profile).ContinueWith(task => {
-                if (task.IsCanceled) {
+                if (task.IsCanceled)
+                {
                     Debug.LogError("UpdateUserProfileAsync was canceled.");
                     return;
                 }
-                if (task.IsFaulted) {
+                if (task.IsFaulted)
+                {
                     Debug.LogError("UpdateUserProfileAsync encountered an error: " + task.Exception);
                     return;
                 }
@@ -248,4 +276,61 @@ public class FirebaseController : MonoBehaviour
 
         notificationPanel.SetActive(true);
     }
+
+    private static string GetErrorMessage(AuthError errorCode)
+    {
+        var message = "";
+        switch (errorCode)
+        {
+            case AuthError.AccountExistsWithDifferentCredentials:
+                message = "Account does not exist";
+                break;
+            case AuthError.MissingPassword:
+                message = "Missing password";
+                break;
+            case AuthError.WeakPassword:
+                message = "Password is weak";
+                break;
+            case AuthError.WrongPassword:
+                message = "Wrong password";
+                break;
+            case AuthError.EmailAlreadyInUse:
+                message = "Your email is already in use";
+                break;
+            case AuthError.InvalidEmail:
+                message = "Your email is invalid";
+                break;
+            case AuthError.MissingEmail:
+                message = "Your email is missing";
+                break;
+            default:
+                message = "Invalid error";
+                break;
+        }
+        return message;
+    }
+
+    private void forgetPasswordSubmit(string forgetPasswordEmail)
+    {
+        auth.SendPasswordResetEmailAsync(forgetPasswordEmail).ContinueWithOnMainThread(task => {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SendPasswordResetEmailAsync was canceled");
+            }
+
+            if (task.IsFaulted)
+            {
+                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
+                {
+                    Firebase.FirebaseException firebaseEx = exception as Firebase.FirebaseException;
+                    if (firebaseEx != null)
+                    {
+                        var errorCode = (AuthError) firebaseEx.ErrorCode;
+                        showNotificationMessage("Error", GetErrorMessage(errorCode));
+                    }
+                }
+            }
+            showNotificationMessage("Alert", "Successfully sent email for resetting your password");
+        });
+    } 
 }
