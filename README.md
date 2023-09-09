@@ -14,6 +14,7 @@ This is a working update to my original Capstone Project that I created during m
 - Cross platform for iOS & Android
 - Signup/Login/Logout with Firebase Authentication
 - Save user data using Realtime Database
+- Background changes with local time
 
 ## ✅ Credits
 
