@@ -76,6 +76,14 @@ public class FirebaseAuthController : MonoBehaviour
         forgetPasswordPanel.SetActive(true);
     }
 
+    public void OpenProfilePanel()
+    {
+        loginPanel.SetActive(false);
+        signupPanel.SetActive(false);
+        profilePanel.SetActive(true);
+        forgetPasswordPanel.SetActive(false);
+    }
+
     public void LoginUser()
     {
         if (string.IsNullOrEmpty(loginEmail.text) && string.IsNullOrEmpty(loginPassword.text))
@@ -250,14 +258,6 @@ public class FirebaseAuthController : MonoBehaviour
                 Debug.Log("User profile updated successfully.");
             });
         }
-    }
-
-    private void OpenProfilePanel()
-    {
-        loginPanel.SetActive(false);
-        signupPanel.SetActive(false);
-        profilePanel.SetActive(true);
-        forgetPasswordPanel.SetActive(false);
     }
 
     private void ShowNotificationMessage(string title, string message)
