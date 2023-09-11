@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class ButtonsController : MonoBehaviour
+public class AuthButtonsController : MonoBehaviour
 {
     public Animator registerAccount, forgotPassword, login, signUp, registerBack, forgetPasswordBack, forgetPasswordSubmit, logout;
     public FirebaseAuthController firebaseAuthController;
@@ -57,49 +57,49 @@ public class ButtonsController : MonoBehaviour
     private IEnumerator OpenSignUpPanel(Animator animator)
     {
         float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength - 0.5f);
-        firebaseAuthController.OpenSignUpPanel();
+        yield return new WaitForSeconds(animationLength);
+        firebaseAuthController.OpenPanel("signupPanel");
     }
 
     private IEnumerator OpenForgetPasswordPanel(Animator animator)
     {
         float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength - 0.5f);
-        firebaseAuthController.OpenForgetPasswordPanel();
+        yield return new WaitForSeconds(animationLength);
+        firebaseAuthController.OpenPanel("forgetPassPanel");
     }
 
     private IEnumerator LoginUser(Animator animator)
     {
         float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength - 0.5f);
+        yield return new WaitForSeconds(animationLength);
         firebaseAuthController.LoginUser();
     }
 
     private IEnumerator SignUpUser(Animator animator)
     {
         float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength - 0.5f);
+        yield return new WaitForSeconds(animationLength);
         firebaseAuthController.SignUpUser();
     }
 
     private IEnumerator Back(Animator animator)
     {
         float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength - 0.5f);
-        firebaseAuthController.OpenLoginPanel();
+        yield return new WaitForSeconds(animationLength);
+        firebaseAuthController.OpenPanel("loginPanel");
     }
 
     private IEnumerator ForgetPassword(Animator animator)
     {
         float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength - 0.5f);
+        yield return new WaitForSeconds(animationLength);
         firebaseAuthController.ForgetPass();
     }
 
     private IEnumerator Logout(Animator animator)
     {
         float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength - 0.5f);
+        yield return new WaitForSeconds(animationLength);
         firebaseAuthController.LogOut();
     }
 }
