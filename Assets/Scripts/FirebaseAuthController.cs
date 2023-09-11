@@ -13,7 +13,8 @@ public class FirebaseAuthController : MonoBehaviour
     public GameObject[] panels;
     public TMP_InputField[] loginInputFields, signupInputFields, forgetPassInputFields;
     public TextMeshProUGUI notifTitleText, notifMessageText;
-    public GameObject notificationPanel;
+    public GameObject notificationPanel, gnome;
+    public Button logoutButton;
     
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -42,6 +43,8 @@ public class FirebaseAuthController : MonoBehaviour
             isSigned = true;
             // TODO: Update this to open either nameGnomePanel or gamePanel, depending on gnome status
             OpenPanel("nameGnomePanel");
+            gnome.SetActive(true);
+            logoutButton.interactable = true;
         }
     }
 
@@ -105,6 +108,8 @@ public class FirebaseAuthController : MonoBehaviour
     {
         auth.SignOut();
         OpenPanel("loginPanel");
+        gnome.SetActive(false);
+        logoutButton.interactable = false;
     }
 
     private void SignInUser(string email, string password)
@@ -126,6 +131,8 @@ public class FirebaseAuthController : MonoBehaviour
 
             // TODO: Update this to open either nameGnomePanel or gamePanel, depending on gnome status
             OpenPanel("nameGnomePanel");
+            gnome.SetActive(true);
+            logoutButton.interactable = true;
         });
     }
 
@@ -175,6 +182,8 @@ public class FirebaseAuthController : MonoBehaviour
             UpdateUserProfile(username);
 
             OpenPanel("nameGnomePanel");
+            gnome.SetActive(true);
+            logoutButton.interactable = true;
             ShowNotificationMessage("Alert", "Account Successfully Created");
             databaseManager.CreateNewUser(username, result.User.Email, result.User.UserId);
         });
