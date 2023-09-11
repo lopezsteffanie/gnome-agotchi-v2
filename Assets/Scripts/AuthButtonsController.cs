@@ -5,101 +5,97 @@ public class AuthButtonsController : MonoBehaviour
 {
     public Animator registerAccount, forgotPassword, login, signUp, registerBack, forgetPasswordBack, forgetPasswordSubmit, logout;
     public FirebaseAuthController firebaseAuthController;
-    
+
     public void onCreateNewAccountClick()
     {
-        registerAccount.Play("Pressed");
-        StartCoroutine(OpenSignUpPanel(registerAccount));
+        PlayAndStartCoroutine(registerAccount, () => OpenSignUpPanel());
     }
 
     public void onForgotPasswordClick()
     {
-        forgotPassword.Play("Pressed");
-        StartCoroutine(OpenForgetPasswordPanel(forgotPassword));
+        PlayAndStartCoroutine(forgotPassword, () => OpenForgetPasswordPanel());
     }
 
     public void onLoginClick()
     {
-        login.Play("Pressed");
-        StartCoroutine(LoginUser(login));
+        PlayAndStartCoroutine(login, () => LoginUser());
     }
 
     public void onSignUpClick()
     {
-        signUp.Play("Pressed");
-        StartCoroutine(SignUpUser(signUp));
+        PlayAndStartCoroutine(signUp, () => SignUpUser());
     }
 
     public void onRegisterBackClick()
     {
-        registerBack.Play("Pressed");
-        StartCoroutine(Back(registerBack));
+        PlayAndStartCoroutine(registerBack, () => Back());
     }
 
     public void onForgetPasswordBackClick()
     {
-        forgetPasswordBack.Play("Pressed");
-        StartCoroutine(Back(forgetPasswordBack));
+        PlayAndStartCoroutine(forgetPasswordBack, () => Back());
     }
 
     public void onForgetPasswordSubmitClick()
     {
-        forgetPasswordSubmit.Play("Pressed");
-        StartCoroutine(ForgetPassword(forgetPasswordSubmit));
+        PlayAndStartCoroutine(forgetPasswordSubmit, () => ForgetPassword());
     }
 
     public void onLogout()
     {
-        logout.Play("Pressed");
-        StartCoroutine(Logout(logout));
+        PlayAndStartCoroutine(logout, () => Logout());
     }
 
-    private IEnumerator OpenSignUpPanel(Animator animator)
+    private void PlayAndStartCoroutine(Animator animator, System.Func<IEnumerator> coroutineFunc)
     {
-        float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength);
+        animator.Play("Pressed");
+        StartCoroutine(coroutineFunc());
+    }
+
+    private IEnumerator OpenSignUpPanel()
+    {
+        yield return new WaitForSeconds(GetAnimationLength(registerAccount));
         firebaseAuthController.OpenPanel("signupPanel");
     }
 
-    private IEnumerator OpenForgetPasswordPanel(Animator animator)
+    private IEnumerator OpenForgetPasswordPanel()
     {
-        float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength);
+        yield return new WaitForSeconds(GetAnimationLength(forgotPassword));
         firebaseAuthController.OpenPanel("forgetPassPanel");
     }
 
-    private IEnumerator LoginUser(Animator animator)
+    private IEnumerator LoginUser()
     {
-        float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength);
+        yield return new WaitForSeconds(GetAnimationLength(login));
         firebaseAuthController.LoginUser();
     }
 
-    private IEnumerator SignUpUser(Animator animator)
+    private IEnumerator SignUpUser()
     {
-        float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength);
+        yield return new WaitForSeconds(GetAnimationLength(signUp));
         firebaseAuthController.SignUpUser();
     }
 
-    private IEnumerator Back(Animator animator)
+    private IEnumerator Back()
     {
-        float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength);
+        yield return new WaitForSeconds(GetAnimationLength(registerBack));
         firebaseAuthController.OpenPanel("loginPanel");
     }
 
-    private IEnumerator ForgetPassword(Animator animator)
+    private IEnumerator ForgetPassword()
     {
-        float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength);
+        yield return new WaitForSeconds(GetAnimationLength(forgetPasswordSubmit));
         firebaseAuthController.ForgetPass();
     }
 
-    private IEnumerator Logout(Animator animator)
+    private IEnumerator Logout()
     {
-        float animationLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        yield return new WaitForSeconds(animationLength);
+        yield return new WaitForSeconds(GetAnimationLength(logout));
         firebaseAuthController.LogOut();
+    }
+
+    private float GetAnimationLength(Animator animator)
+    {
+        return animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
     }
 }
