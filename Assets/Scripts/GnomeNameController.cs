@@ -12,6 +12,8 @@ public class GnomeNameController : MonoBehaviour
     public Button startGameButton;
     public Animator confirmNameAnimator, resetNameAnimator, startGameAnimator;
     public FirebaseAuthController firebaseAuthController;
+    public GnomeColorController gnomeColorController;
+    public DatabaseManager databaseManager;
 
     private string currentGnomeName = "";
 
@@ -41,6 +43,20 @@ public class GnomeNameController : MonoBehaviour
 
     public void OnStartGame()
     {
+        int colorIndex = gnomeColorController.GetSelectedGnomeIndex();
+        string currentUser = firebaseAuthController.GetCurrentUserId();
+        if (currentUser != null)
+        {
+            databaseManager.CreateNewGnome(currentGnomeName, colorIndex, (gnomeId) =>
+            {
+                databaseManager.UpdateUser(currentUser, gnomeId);
+            });
+        }
+        else
+        {
+            Debug.LogWarning("User is not logged in.");
+            // TODO: Handle error
+        }
         startGameAnimator.Play("Pressed");
         StartCoroutine(StartGame(startGameAnimator));
     }

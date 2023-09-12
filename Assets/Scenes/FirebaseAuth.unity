@@ -454,6 +454,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1122323446}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &43435829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3522,8 +3534,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: FirebaseController, Assembly-CSharp
+      - m_Target: {fileID: 673879978}
+        m_TargetAssemblyTypeName: FirebaseAuthController, Assembly-CSharp
         m_MethodName: CloseNotifPanel
         m_Mode: 1
         m_Arguments:
@@ -8287,6 +8299,7 @@ GameObject:
   - component: {fileID: 1241294769}
   - component: {fileID: 1241294768}
   - component: {fileID: 1241294771}
+  - component: {fileID: 1241294772}
   m_Layer: 5
   m_Name: Login
   m_TagString: Untagged
@@ -8359,7 +8372,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 945901945}
-        m_TargetAssemblyTypeName: ButtonsController, Assembly-CSharp
+        m_TargetAssemblyTypeName: AuthButtonsController, Assembly-CSharp
         m_MethodName: onLoginClick
         m_Mode: 1
         m_Arguments:
@@ -8429,6 +8442,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1241294772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241294766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a912888ae60b4aaa861535b050d47d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1263174846
 GameObject:
   m_ObjectHideFlags: 0
@@ -10322,6 +10347,8 @@ MonoBehaviour:
   resetNameAnimator: {fileID: 658963020}
   startGameAnimator: {fileID: 1502008215}
   firebaseAuthController: {fileID: 673879978}
+  gnomeColorController: {fileID: 1604050434}
+  databaseManager: {fileID: 673879977}
 --- !u!1 &1536298250
 GameObject:
   m_ObjectHideFlags: 0
@@ -10859,6 +10886,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1604050433}
+  - component: {fileID: 1604050434}
   m_Layer: 0
   m_Name: Gnome
   m_TagString: Untagged
@@ -10888,6 +10916,26 @@ Transform:
   - {fileID: 995773113}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1604050434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604050432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2dd6ac81b934a809a9fefe8cd54e43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gnomePrefabs:
+  - {fileID: 21694560}
+  - {fileID: 578273979}
+  - {fileID: 1620660629}
+  - {fileID: 159368584}
+  - {fileID: 135618900}
+  - {fileID: 1144046478}
+  - {fileID: 995773112}
 --- !u!1 &1604563045
 GameObject:
   m_ObjectHideFlags: 0

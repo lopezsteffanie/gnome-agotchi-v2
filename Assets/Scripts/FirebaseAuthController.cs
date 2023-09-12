@@ -40,11 +40,37 @@ public class FirebaseAuthController : MonoBehaviour
     {
         if (isSignIn && !isSigned)
         {
+            Debug.Log("User has signed in successfully.");
             isSigned = true;
-            // TODO: Update this to open either nameGnomePanel or gamePanel, depending on gnome status
-            OpenPanel("nameGnomePanel");
+            
+            string userId = GetCurrentUserId();
+            databaseManager.GetStartGameStatus(userId, startGameStatus => {
+                if (startGameStatus)
+                {
+                    Debug.Log("Before opening gamePanel");
+                    // Open the gamePanel
+                    OpenPanel("gamePanel");
+                    Debug.Log("After opening gamePanel");
+                }
+                else
+                {
+                    Debug.Log("Before opening nameGnomePanel");
+                    // Open the nameGnomePanel
+                    OpenPanel("nameGnomePanel");
+                    Debug.Log("After opening nameGnomePanel");
+                }
+            });
+
             gnome.SetActive(true);
             logoutButton.interactable = true;
+        }
+        else if (!isSignIn && isSigned)
+        {
+            Debug.Log("User has signed out.");
+            isSigned = false;
+
+            gnome.SetActive(false);
+            logoutButton.interactable = false;
         }
     }
 
@@ -58,12 +84,15 @@ public class FirebaseAuthController : MonoBehaviour
     {
         foreach (GameObject panel in panels)
         {
+            Debug.Log($"Checking panel: {panel.name}");
+            Debug.Log($"Panel {panel.name} is active? {panel.name == panelName}");
             panel.SetActive(panel.name == panelName);
         }
     }
 
     public void LoginUser()
     {
+        Debug.Log("Before calling LoginUser");
         if (AreInputFieldsEmpty(loginInputFields))
         {
             ShowNotificationMessage("Error", "Fields Empty! Please Input Details in All Fields");
@@ -72,6 +101,7 @@ public class FirebaseAuthController : MonoBehaviour
 
         SignInUser(loginInputFields[0].text, loginInputFields[1].text); // loginEmail, loginPassword
         ClearInputFields(loginInputFields);
+        Debug.Log("After calling LoginUser");
     }
 
     public void SignUpUser()
@@ -110,10 +140,24 @@ public class FirebaseAuthController : MonoBehaviour
         OpenPanel("loginPanel");
         gnome.SetActive(false);
         logoutButton.interactable = false;
+        isSignIn = false;
+        isSigned = false;
+    }
+
+    public string GetCurrentUserId()
+    {
+        user = auth.CurrentUser;
+        if (user != null)
+        {
+            return user.UserId;
+        }
+        // TODO: Update for error handling
+        return null;
     }
 
     private void SignInUser(string email, string password)
     {
+        Debug.Log("Before calling SignInUser");
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task => {
             if (task.IsCanceled)
             {
@@ -122,6 +166,7 @@ public class FirebaseAuthController : MonoBehaviour
             }
             if (task.IsFaulted)
             {
+                Debug.Log("SignInWithEmailAndPasswordAsync was faulted");
                 HandleAuthError(task.Exception);
                 return;
             }
@@ -129,11 +174,28 @@ public class FirebaseAuthController : MonoBehaviour
             Firebase.Auth.AuthResult result = task.Result;
             Debug.Log($"User signed in successfully: {result.User.DisplayName} ({result.User.UserId})");
 
-            // TODO: Update this to open either nameGnomePanel or gamePanel, depending on gnome status
-            OpenPanel("nameGnomePanel");
+            string userId = result.User.UserId;
+            databaseManager.GetStartGameStatus(userId, startGameStatus => {
+                if (startGameStatus)
+                {
+                    Debug.Log("Before opening gamePanel");
+                    // Open the gamePanel
+                    OpenPanel("gamePanel");
+                    Debug.Log("After opening gamePanel");
+                }
+                else
+                {
+                    Debug.Log("Before opening nameGnomePanel");
+                    // Open the nameGnomePanel
+                    OpenPanel("nameGnomePanel");
+                    Debug.Log("After opening nameGnomePanel");
+                }
+            });
+
             gnome.SetActive(true);
             logoutButton.interactable = true;
         });
+        Debug.Log("After sign in user called");
     }
 
     private void InitializeFirebase()
@@ -158,6 +220,10 @@ public class FirebaseAuthController : MonoBehaviour
                 Debug.Log($"Signed in {user.UserId}");
                 isSignIn = true;
             }
+            else
+            {
+                Debug.Log("User is not signed in or authentication state changed.");
+            }
         }
     }
 
@@ -181,7 +247,9 @@ public class FirebaseAuthController : MonoBehaviour
 
             UpdateUserProfile(username);
 
+            Debug.Log("Before opening nameGnomePanel");
             OpenPanel("nameGnomePanel");
+            Debug.Log("After opening nameGnomePanel");
             gnome.SetActive(true);
             logoutButton.interactable = true;
             ShowNotificationMessage("Alert", "Account Successfully Created");

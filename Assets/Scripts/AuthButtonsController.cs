@@ -8,6 +8,7 @@ public class AuthButtonsController : MonoBehaviour
 
     public void onCreateNewAccountClick()
     {
+        Debug.Log("Create New Account button clicked");
         PlayAndStartCoroutine(registerAccount, () => OpenSignUpPanel());
     }
 
@@ -18,11 +19,13 @@ public class AuthButtonsController : MonoBehaviour
 
     public void onLoginClick()
     {
+        Debug.Log("Login button clicked");
         PlayAndStartCoroutine(login, () => LoginUser());
     }
-
+    
     public void onSignUpClick()
     {
+        Debug.Log("Sign Up button clicked");
         PlayAndStartCoroutine(signUp, () => SignUpUser());
     }
 
@@ -54,8 +57,10 @@ public class AuthButtonsController : MonoBehaviour
 
     private IEnumerator OpenSignUpPanel()
     {
+        Debug.Log("OpenSignUpPanel coroutine started");
         yield return new WaitForSeconds(GetAnimationLength(registerAccount));
         firebaseAuthController.OpenPanel("signupPanel");
+        Debug.Log("OpenSignUpPanel coroutine completed");
     }
 
     private IEnumerator OpenForgetPasswordPanel()
@@ -66,14 +71,20 @@ public class AuthButtonsController : MonoBehaviour
 
     private IEnumerator LoginUser()
     {
+        Debug.Log("LoginUser coroutine started");
         yield return new WaitForSeconds(GetAnimationLength(login));
+        Debug.Log("Before calling firebaseAuthController.LoginUser()");
         firebaseAuthController.LoginUser();
+        Debug.Log("After calling firebaseAuthController.LoginUser()");
+        Debug.Log("LoginUser coroutine completed");
     }
 
     private IEnumerator SignUpUser()
     {
+        Debug.Log("SignUpUser coroutine started");
         yield return new WaitForSeconds(GetAnimationLength(signUp));
         firebaseAuthController.SignUpUser();
+        Debug.Log("SignUpUser coroutine completed");
     }
 
     private IEnumerator Back()
