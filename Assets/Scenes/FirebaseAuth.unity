@@ -339,6 +339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 42937073}
+  - component: {fileID: 42937074}
   m_Layer: 7
   m_Name: settingsPanel
   m_TagString: Untagged
@@ -366,6 +367,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &42937074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42937072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06968fb4834634d4699e22d0072e76ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firebaseAuthController: {fileID: 673879978}
+  logoutButton: {fileID: 43435828}
+  closeButton: {fileID: 2008800652}
+  settingsButton: {fileID: 1122323448}
+  settingsPanel: {fileID: 42937072}
+  settingsBtn: {fileID: 1122323446}
 --- !u!1 &43435827
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,43 +448,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 43435829}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 945901945}
-        m_TargetAssemblyTypeName: AuthButtonsController, Assembly-CSharp
-        m_MethodName: onLogout
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 42937072}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1122323446}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &43435829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,19 +611,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 53641480}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 945901945}
-        m_TargetAssemblyTypeName: ButtonsController, Assembly-CSharp
-        m_MethodName: onForgetPasswordSubmitClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &53641480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2309,19 +2280,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 281486048}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1515181135}
-        m_TargetAssemblyTypeName: GnomeNameController, Assembly-CSharp
-        m_MethodName: OnSetName
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &281486048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2767,19 +2726,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 337117357}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 945901945}
-        m_TargetAssemblyTypeName: ButtonsController, Assembly-CSharp
-        m_MethodName: onForgetPasswordBackClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &337117357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3068,6 +3015,7 @@ GameObject:
   - component: {fileID: 442821972}
   - component: {fileID: 442821974}
   - component: {fileID: 442821973}
+  - component: {fileID: 442821975}
   m_Layer: 5
   m_Name: loginPanel
   m_TagString: Untagged
@@ -3141,6 +3089,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 442821971}
   m_CullTransparentMesh: 1
+--- !u!114 &442821975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442821971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a8fddc22560498587cc82018c0b518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firebaseAuthController: {fileID: 673879978}
+  loginButton: {fileID: 1241294768}
+  registerAccountButton: {fileID: 955539055}
+  forgotPasswordButton: {fileID: 1054494196}
+  loginEmail: {fileID: 1573426794}
+  loginPassword: {fileID: 2075773815}
 --- !u!1 &493782119
 GameObject:
   m_ObjectHideFlags: 0
@@ -3533,19 +3499,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 569650434}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 673879978}
-        m_TargetAssemblyTypeName: FirebaseAuthController, Assembly-CSharp
-        m_MethodName: CloseNotifPanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &569650434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4278,19 +4232,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 658963022}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1515181135}
-        m_TargetAssemblyTypeName: GnomeNameController, Assembly-CSharp
-        m_MethodName: OnResetName
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &658963022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6385,64 +6327,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939434576}
   m_CullTransparentMesh: 1
---- !u!1 &945901942
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 945901944}
-  - component: {fileID: 945901945}
-  m_Layer: 0
-  m_Name: AuthButtonsController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &945901944
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 945901942}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 732.3492, y: 1032.5114, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &945901945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 945901942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b1a4ce5dfae54a49a4a219b146dd600, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  registerAccount: {fileID: 955539058}
-  forgotPassword: {fileID: 1054494199}
-  login: {fileID: 1241294771}
-  signUp: {fileID: 1659792833}
-  registerBack: {fileID: 1090122476}
-  forgetPasswordBack: {fileID: 337117359}
-  forgetPasswordSubmit: {fileID: 53641482}
-  logout: {fileID: 43435830}
-  firebaseAuthController: {fileID: 673879978}
-  loginEmail: {fileID: 1573426794}
-  loginPassword: {fileID: 2075773815}
-  signUpEmail: {fileID: 73322382}
-  signUpPassword: {fileID: 1452908927}
-  signUpUserName: {fileID: 12046578}
 --- !u!1 &955539053
 GameObject:
   m_ObjectHideFlags: 0
@@ -6526,19 +6410,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 955539056}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 945901945}
-        m_TargetAssemblyTypeName: ButtonsController, Assembly-CSharp
-        m_MethodName: onCreateNewAccountClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &955539056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6851,19 +6723,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1054494197}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 945901945}
-        m_TargetAssemblyTypeName: ButtonsController, Assembly-CSharp
-        m_MethodName: onForgotPasswordClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1054494197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7027,19 +6887,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1090122478}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 945901945}
-        m_TargetAssemblyTypeName: ButtonsController, Assembly-CSharp
-        m_MethodName: onRegisterBackClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1090122478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7171,18 +7019,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1122323446}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1122323449
 MonoBehaviour:
@@ -8375,13 +8211,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 945901945}
-        m_TargetAssemblyTypeName: AuthButtonsController, Assembly-CSharp
-        m_MethodName: onLoginClick
+      - m_Target: {fileID: 673879975}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9826,6 +9662,7 @@ GameObject:
   - component: {fileID: 1472400147}
   - component: {fileID: 1472400149}
   - component: {fileID: 1472400148}
+  - component: {fileID: 1472400150}
   m_Layer: 5
   m_Name: notifMessagePanel
   m_TagString: Untagged
@@ -9891,6 +9728,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1472400146}
   m_CullTransparentMesh: 1
+--- !u!114 &1472400150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472400146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c1f4dde8934cfdad2e940954d3144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 569650433}
+  notifMessagePanel: {fileID: 1472400146}
 --- !u!1 &1473566710
 GameObject:
   m_ObjectHideFlags: 0
@@ -10181,19 +10032,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1502008217}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1515181135}
-        m_TargetAssemblyTypeName: GnomeNameController, Assembly-CSharp
-        m_MethodName: OnStartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1502008217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10329,15 +10168,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayGnomeName: {fileID: 116871049}
   inputGnomeName: {fileID: 1420280648}
-  confirmNameButton: {fileID: 281486044}
   inputField: {fileID: 1420280646}
-  resetNameButton: {fileID: 658963018}
-  nameGnomePanel: {fileID: 1515181131}
-  gamePanel: {fileID: 1932040053}
   startGameButton: {fileID: 1502008216}
-  confirmNameAnimator: {fileID: 281486046}
-  resetNameAnimator: {fileID: 658963020}
-  startGameAnimator: {fileID: 1502008215}
+  confirmNameButton: {fileID: 281486047}
+  resetNameButton: {fileID: 658963021}
   firebaseAuthController: {fileID: 673879978}
   gnomeColorController: {fileID: 1604050434}
   databaseManager: {fileID: 673879977}
@@ -10490,6 +10324,7 @@ GameObject:
   - component: {fileID: 1558075925}
   - component: {fileID: 1558075927}
   - component: {fileID: 1558075926}
+  - component: {fileID: 1558075928}
   m_Layer: 5
   m_Name: forgetPassPanel
   m_TagString: Untagged
@@ -10560,6 +10395,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1558075924}
   m_CullTransparentMesh: 1
+--- !u!114 &1558075928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558075924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3822dd73819c8476992a2716e2f85a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firebaseAuthController: {fileID: 673879978}
+  backButton: {fileID: 337117356}
+  submitButton: {fileID: 53641479}
 --- !u!1 &1573426790
 GameObject:
   m_ObjectHideFlags: 0
@@ -11441,19 +11291,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1659792835}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 945901945}
-        m_TargetAssemblyTypeName: ButtonsController, Assembly-CSharp
-        m_MethodName: onSignUpClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1659792835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12728,6 +12566,7 @@ GameObject:
   - component: {fileID: 1913493642}
   - component: {fileID: 1913493644}
   - component: {fileID: 1913493643}
+  - component: {fileID: 1913493645}
   m_Layer: 5
   m_Name: signupPanel
   m_TagString: Untagged
@@ -12804,6 +12643,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913493641}
   m_CullTransparentMesh: 1
+--- !u!114 &1913493645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913493641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e763ec410b7bc4b838a1eaa036113fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firebaseAuthController: {fileID: 673879978}
+  backButton: {fileID: 1090122477}
+  signUpButton: {fileID: 1659792834}
+  signUpEmail: {fileID: 73322382}
+  signUpPassword: {fileID: 1452908927}
+  signUpUsername: {fileID: 12046578}
 --- !u!1 &1921018033
 GameObject:
   m_ObjectHideFlags: 0
@@ -13252,31 +13109,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2008800653}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 42937072}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1122323446}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2008800653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13766,6 +13599,5 @@ SceneRoots:
   - {fileID: 1645713359}
   - {fileID: 1275549983}
   - {fileID: 673879976}
-  - {fileID: 945901944}
   - {fileID: 1325671942}
   - {fileID: 1604050433}

@@ -80,9 +80,14 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    public bool GetStartGameStatus(string userId)
+    public async Task<bool> GetStartGameStatus(string userId)
     {
+        Debug.Log($"userId: {userId}");
         var task = dbReference.Child("users").Child(userId).Child("startGameStatus").GetValueAsync();
+        Debug.Log($"task: {task}");
+        
+        // Await the Firebase task
+        await task;
         
         if (task.IsFaulted)
         {
@@ -96,11 +101,14 @@ public class DatabaseManager : MonoBehaviour
             if (snapshot.Exists)
             {
                 string startGameStatusStr = snapshot.GetRawJsonValue();
-                bool startGameStatus;
-                
-                if (bool.TryParse(startGameStatusStr, out startGameStatus))
+                Debug.Log($"startGameStatus: {startGameStatusStr}");
+                if (startGameStatusStr == "true")
                 {
-                    return startGameStatus;
+                    return true;
+                }
+                else if (startGameStatusStr == "false")
+                {
+                    return false;
                 }
                 else
                 {
@@ -118,6 +126,7 @@ public class DatabaseManager : MonoBehaviour
         }
         
         // Default to false if none of the conditions above are met
+        Debug.LogWarning("No conditions met to check startGameStatus, defaulting to false");
         return false;
     }
 }
