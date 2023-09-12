@@ -80,39 +80,44 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    public void GetStartGameStatus(string userId, Action<bool> callback)
+    public bool GetStartGameStatus(string userId)
     {
-        dbReference.Child("users").Child(userId).Child("startGameStatus").GetValueAsync().ContinueWith(task => {
-            if (task.IsFaulted)
+        var task = dbReference.Child("users").Child(userId).Child("startGameStatus").GetValueAsync();
+        
+        if (task.IsFaulted)
+        {
+            Debug.LogError($"Error fetching startGameStatus: {task.Exception}");
+            return false;
+        }
+        else if (task.IsCompleted)
+        {
+            DataSnapshot snapshot = task.Result;
+            
+            if (snapshot.Exists)
             {
-                Debug.LogError($"Error fetching startGameStatus: {task.Exception}");
-                callback(false);
-            }
-            else if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-                if (snapshot.Exists)
+                string startGameStatusStr = snapshot.GetRawJsonValue();
+                bool startGameStatus;
+                
+                if (bool.TryParse(startGameStatusStr, out startGameStatus))
                 {
-                    string startGameStatusStr = snapshot.GetRawJsonValue();
-                    bool startGameStatus;
-                    if (bool.TryParse(startGameStatusStr, out startGameStatus))
-                    {
-                        callback(startGameStatus);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Invalid startGameStatus value in the database");
-                        // TODO: Handle the case where startGameStatus is not a valid boolean
-                        callback(false); // Default to false
-                    }
+                    return startGameStatus;
                 }
                 else
                 {
-                    Debug.LogWarning("startGameStatus not found in the database");
-                    // TODO: Handle the case where startGameStatus is not found
-                    callback(false); // Default to false
+                    Debug.LogWarning("Invalid startGameStatus value in the database");
+                    // TODO: Handle the case where startGameStatus is not a valid boolean
+                    return false; // Default to false
                 }
             }
-        });
+            else
+            {
+                Debug.LogWarning("startGameStatus not found in the database");
+                // TODO: Handle the case where startGameStatus is not found
+                return false; // Default to false
+            }
+        }
+        
+        // Default to false if none of the conditions above are met
+        return false;
     }
 }

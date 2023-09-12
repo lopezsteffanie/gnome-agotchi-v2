@@ -75,7 +75,7 @@ public class AuthButtonsController : MonoBehaviour
     {
         Debug.Log("SignInUser coroutine started");
         yield return new WaitForSeconds(GetAnimationLength(login));
-        // Debug.Log("Before calling firebaseAuthController.SignInUser()");
+        Debug.Log("Before calling firebaseAuthController.SignInUser()");
 
         string email = loginEmail.text;
         string password = loginPassword.text;
@@ -83,7 +83,7 @@ public class AuthButtonsController : MonoBehaviour
         // Call the SignInUser method in FirebaseAuthController and pass a callback function
         firebaseAuthController.SignInUser(email, password, () => {
             // This code will execute when authentication is successful
-            // Debug.Log("After calling firebaseAuthController.SignInUser()");
+            Debug.Log("After calling firebaseAuthController.SignInUser()");
             Debug.Log("SignInUser coroutine completed");
         });
     }

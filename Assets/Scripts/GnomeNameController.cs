@@ -45,8 +45,12 @@ public class GnomeNameController : MonoBehaviour
     {
         int colorIndex = gnomeColorController.GetSelectedGnomeIndex();
         string currentUser = firebaseAuthController.GetCurrentUserId();
+        Debug.Log($"GnomeNameController: currentUser -> {currentUser}");
         if (currentUser != null)
         {
+            Debug.Log("GnomeNameController: Before openGamePanel");
+            firebaseAuthController.OpenPanel("gamePanel");
+            Debug.Log("GnomeNameController: After openGamePanel");
             databaseManager.CreateNewGnome(currentGnomeName, colorIndex, (gnomeId) =>
             {
                 databaseManager.UpdateUser(currentUser, gnomeId);

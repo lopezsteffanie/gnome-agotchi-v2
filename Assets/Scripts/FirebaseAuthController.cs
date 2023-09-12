@@ -41,10 +41,9 @@ public class FirebaseAuthController : MonoBehaviour
         {
             // Debug.Log("User has signed in successfully.");
             string userId = GetCurrentUserId();
-            databaseManager.GetStartGameStatus(userId, startGameStatus => {
-                string panelName = startGameStatus ? "gamePanel" : "nameGnomePanel";
-                OpenPanel(panelName);
-            });
+            bool startGameStatus = databaseManager.GetStartGameStatus(userId);
+            string panelName = startGameStatus ? "gamePanel" : "nameGnomePanel";
+            OpenPanel(panelName);
 
             gnome.SetActive(true);
             logoutButton.interactable = true;
@@ -83,10 +82,9 @@ public class FirebaseAuthController : MonoBehaviour
         Action onSignInSuccess = () =>
         {
             string userId = GetCurrentUserId();
-            databaseManager.GetStartGameStatus(userId, startGameStatus => {
-                string panelName = startGameStatus ? "gamePanel" : "nameGnomePanel";
-                OpenPanel(panelName);
-            });
+            bool startGameStatus = databaseManager.GetStartGameStatus(userId);
+            string panelName = startGameStatus ? "gamePanel" : "nameGnomePanel";
+            OpenPanel(panelName);
         };
 
         if (isSignUp)
@@ -188,10 +186,13 @@ public class FirebaseAuthController : MonoBehaviour
             Firebase.Auth.AuthResult result = task.Result;
             Debug.Log($"User signed in successfully: {result.User.DisplayName} ({result.User.UserId})");
             string userId = GetCurrentUserId();
-            databaseManager.GetStartGameStatus(userId, startGameStatus => {
-                string panelName = startGameStatus ? "gamePanel" : "nameGnomePanel";
-                OpenPanel(panelName);
-            });
+
+            bool startGameStatus = databaseManager.GetStartGameStatus(userId);
+            string panelName = startGameStatus ? "gamePanel" : "nameGnomePanel";
+            Debug.Log($"Before opening panel: {panelName}");
+            OpenPanel(panelName);
+            Debug.Log($"After opening panel: {panelName}");
+            
             // Call the callback function to notify the coroutine
             onSignInSuccess?.Invoke();
         });
