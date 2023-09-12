@@ -8,47 +8,29 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1078063208578:android:5783480b671e307e5bbc9b",
+        "mobilesdk_app_id": "1:1078063208578:ios:fcaa2fbf09a8b2595bbc9b",
         "android_client_info": {
           "package_name": "com.steviecodesit.gnomagotchi"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1078063208578-udp26ltc29e4snccgit5cg102t2lumap.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.steviecodesit.gnomagotchi",
-            "certificate_hash": "025dbaf777b7411f6e74ec3b66b0d76f0cee0e29"
-          }
-        },
-        {
-          "client_id": "1078063208578-lgqh21880ena7gbjdbgo3elv2n5nedf6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
       "api_key": [
         {
-          "current_key": "AIzaSyB4MR35UtAUOT5Mlto1BbFDcHxNRf8VXfQ"
+          "current_key": "AIzaSyD-DJbZMWwYavwWWG4By0b9RlcyIUONxN8"
         }
       ],
       "services": {
+        "analytics_service": {
+          "status": 0
+        },
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1078063208578-lgqh21880ena7gbjdbgo3elv2n5nedf6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1078063208578-s6bhdb4p0qsu9aoe6lj14ajho6jq1j84.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.steviecodesit.gnomagotchi"
-              }
-            }
-          ]
+          "status": 1
         }
-      }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078063208578-s6bhdb4p0qsu9aoe6lj14ajho6jq1j84.apps.googleusercontent.com"
+        }
+      ]
     }
   ],
   "configuration_version": "1"

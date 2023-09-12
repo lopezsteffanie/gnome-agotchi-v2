@@ -6438,6 +6438,11 @@ MonoBehaviour:
   forgetPasswordSubmit: {fileID: 53641482}
   logout: {fileID: 43435830}
   firebaseAuthController: {fileID: 673879978}
+  loginEmail: {fileID: 1573426794}
+  loginPassword: {fileID: 2075773815}
+  signUpEmail: {fileID: 73322382}
+  signUpPassword: {fileID: 1452908927}
+  signUpUserName: {fileID: 12046578}
 --- !u!1 &955539053
 GameObject:
   m_ObjectHideFlags: 0

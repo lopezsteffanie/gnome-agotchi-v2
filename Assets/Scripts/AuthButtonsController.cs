@@ -1,14 +1,16 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class AuthButtonsController : MonoBehaviour
 {
     public Animator registerAccount, forgotPassword, login, signUp, registerBack, forgetPasswordBack, forgetPasswordSubmit, logout;
     public FirebaseAuthController firebaseAuthController;
+    public TMP_InputField loginEmail, loginPassword, signUpEmail, signUpPassword, signUpUserName;
 
     public void onCreateNewAccountClick()
     {
-        Debug.Log("Create New Account button clicked");
+        // Debug.Log("Create New Account button clicked");
         PlayAndStartCoroutine(registerAccount, () => OpenSignUpPanel());
     }
 
@@ -19,14 +21,14 @@ public class AuthButtonsController : MonoBehaviour
 
     public void onLoginClick()
     {
-        Debug.Log("Login button clicked");
-        PlayAndStartCoroutine(login, () => LoginUser());
+        // Debug.Log("Login button clicked");
+        PlayAndStartCoroutine(login, () => SignInUser());
     }
     
     public void onSignUpClick()
     {
-        Debug.Log("Sign Up button clicked");
-        PlayAndStartCoroutine(signUp, () => SignUpUser());
+        // Debug.Log("Sign Up button clicked");
+        PlayAndStartCoroutine(signUp, () => CreateUser());
     }
 
     public void onRegisterBackClick()
@@ -57,10 +59,10 @@ public class AuthButtonsController : MonoBehaviour
 
     private IEnumerator OpenSignUpPanel()
     {
-        Debug.Log("OpenSignUpPanel coroutine started");
+        // Debug.Log("OpenSignUpPanel coroutine started");
         yield return new WaitForSeconds(GetAnimationLength(registerAccount));
         firebaseAuthController.OpenPanel("signupPanel");
-        Debug.Log("OpenSignUpPanel coroutine completed");
+        // Debug.Log("OpenSignUpPanel coroutine completed");
     }
 
     private IEnumerator OpenForgetPasswordPanel()
@@ -69,22 +71,29 @@ public class AuthButtonsController : MonoBehaviour
         firebaseAuthController.OpenPanel("forgetPassPanel");
     }
 
-    private IEnumerator LoginUser()
+    private IEnumerator SignInUser()
     {
-        Debug.Log("LoginUser coroutine started");
+        Debug.Log("SignInUser coroutine started");
         yield return new WaitForSeconds(GetAnimationLength(login));
-        Debug.Log("Before calling firebaseAuthController.LoginUser()");
-        firebaseAuthController.LoginUser();
-        Debug.Log("After calling firebaseAuthController.LoginUser()");
-        Debug.Log("LoginUser coroutine completed");
+        // Debug.Log("Before calling firebaseAuthController.SignInUser()");
+
+        string email = loginEmail.text;
+        string password = loginPassword.text;
+
+        // Call the SignInUser method in FirebaseAuthController and pass a callback function
+        firebaseAuthController.SignInUser(email, password, () => {
+            // This code will execute when authentication is successful
+            // Debug.Log("After calling firebaseAuthController.SignInUser()");
+            Debug.Log("SignInUser coroutine completed");
+        });
     }
 
-    private IEnumerator SignUpUser()
+    private IEnumerator CreateUser()
     {
-        Debug.Log("SignUpUser coroutine started");
+        // Debug.Log("CreateUser coroutine started");
         yield return new WaitForSeconds(GetAnimationLength(signUp));
-        firebaseAuthController.SignUpUser();
-        Debug.Log("SignUpUser coroutine completed");
+        firebaseAuthController.CreateUser(signUpEmail.text, signUpPassword.text, signUpUserName.text);
+        // Debug.Log("CreateUser coroutine completed");
     }
 
     private IEnumerator Back()

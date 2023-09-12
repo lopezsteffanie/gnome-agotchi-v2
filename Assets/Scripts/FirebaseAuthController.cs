@@ -15,13 +15,12 @@ public class FirebaseAuthController : MonoBehaviour
     public TextMeshProUGUI notifTitleText, notifMessageText;
     public GameObject notificationPanel, gnome;
     public Button logoutButton;
-    
+
     private FirebaseAuth auth;
     private FirebaseUser user;
     private bool isSignIn = false;
-    private bool isSigned = false;
 
-    public void Start()
+    private void Start()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
             var dependencyStatus = task.Result;
@@ -38,37 +37,21 @@ public class FirebaseAuthController : MonoBehaviour
 
     private void Update()
     {
-        if (isSignIn && !isSigned)
+        if (isSignIn)
         {
-            Debug.Log("User has signed in successfully.");
-            isSigned = true;
-            
+            // Debug.Log("User has signed in successfully.");
             string userId = GetCurrentUserId();
             databaseManager.GetStartGameStatus(userId, startGameStatus => {
-                if (startGameStatus)
-                {
-                    Debug.Log("Before opening gamePanel");
-                    // Open the gamePanel
-                    OpenPanel("gamePanel");
-                    Debug.Log("After opening gamePanel");
-                }
-                else
-                {
-                    Debug.Log("Before opening nameGnomePanel");
-                    // Open the nameGnomePanel
-                    OpenPanel("nameGnomePanel");
-                    Debug.Log("After opening nameGnomePanel");
-                }
+                string panelName = startGameStatus ? "gamePanel" : "nameGnomePanel";
+                OpenPanel(panelName);
             });
 
             gnome.SetActive(true);
             logoutButton.interactable = true;
         }
-        else if (!isSignIn && isSigned)
+        else
         {
-            Debug.Log("User has signed out.");
-            isSigned = false;
-
+            // Debug.Log("User has signed out.");
             gnome.SetActive(false);
             logoutButton.interactable = false;
         }
@@ -84,35 +67,38 @@ public class FirebaseAuthController : MonoBehaviour
     {
         foreach (GameObject panel in panels)
         {
-            Debug.Log($"Checking panel: {panel.name}");
-            Debug.Log($"Panel {panel.name} is active? {panel.name == panelName}");
             panel.SetActive(panel.name == panelName);
         }
     }
 
-    public void LoginUser()
+    public void AuthenticateUser(bool isSignUp)
     {
-        Debug.Log("Before calling LoginUser");
-        if (AreInputFieldsEmpty(loginInputFields))
+        TMP_InputField[] inputFields = isSignUp ? signupInputFields : loginInputFields;
+        if (AreInputFieldsEmpty(inputFields))
         {
             ShowNotificationMessage("Error", "Fields Empty! Please Input Details in All Fields");
             return;
         }
 
-        SignInUser(loginInputFields[0].text, loginInputFields[1].text); // loginEmail, loginPassword
-        ClearInputFields(loginInputFields);
-        Debug.Log("After calling LoginUser");
-    }
-
-    public void SignUpUser()
-    {
-        if (AreInputFieldsEmpty(signupInputFields))
+        Action onSignInSuccess = () =>
         {
-            ShowNotificationMessage("Error", "Fields Empty! Please Input Details in All Fields");
-            return;
+            string userId = GetCurrentUserId();
+            databaseManager.GetStartGameStatus(userId, startGameStatus => {
+                string panelName = startGameStatus ? "gamePanel" : "nameGnomePanel";
+                OpenPanel(panelName);
+            });
+        };
+
+        if (isSignUp)
+        {
+            CreateUser(inputFields[1].text, inputFields[2].text, inputFields[0].text);
+        }
+        else
+        {
+            SignInUser(inputFields[0].text, inputFields[1].text, onSignInSuccess);
         }
 
-        CreateUser(signupInputFields[1].text, signupInputFields[2].text, signupInputFields[0].text); // signupEmail, signupPassword, signupUserName
+        ClearInputFields(inputFields);
     }
 
     public void ForgetPass()
@@ -123,79 +109,14 @@ public class FirebaseAuthController : MonoBehaviour
             return;
         }
 
-        ForgetPasswordSubmit(forgetPassInputFields[0].text); // forgetPassEmail
-    }
-
-    public void CloseNotifPanel()
-    {
-        notifTitleText.text = "";
-        notifMessageText.text = "";
-
-        notificationPanel.SetActive(false);
+        ForgetPasswordSubmit(forgetPassInputFields[0].text);
     }
 
     public void LogOut()
     {
         auth.SignOut();
         OpenPanel("loginPanel");
-        gnome.SetActive(false);
-        logoutButton.interactable = false;
         isSignIn = false;
-        isSigned = false;
-    }
-
-    public string GetCurrentUserId()
-    {
-        user = auth.CurrentUser;
-        if (user != null)
-        {
-            return user.UserId;
-        }
-        // TODO: Update for error handling
-        return null;
-    }
-
-    private void SignInUser(string email, string password)
-    {
-        Debug.Log("Before calling SignInUser");
-        auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task => {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                Debug.Log("SignInWithEmailAndPasswordAsync was faulted");
-                HandleAuthError(task.Exception);
-                return;
-            }
-
-            Firebase.Auth.AuthResult result = task.Result;
-            Debug.Log($"User signed in successfully: {result.User.DisplayName} ({result.User.UserId})");
-
-            string userId = result.User.UserId;
-            databaseManager.GetStartGameStatus(userId, startGameStatus => {
-                if (startGameStatus)
-                {
-                    Debug.Log("Before opening gamePanel");
-                    // Open the gamePanel
-                    OpenPanel("gamePanel");
-                    Debug.Log("After opening gamePanel");
-                }
-                else
-                {
-                    Debug.Log("Before opening nameGnomePanel");
-                    // Open the nameGnomePanel
-                    OpenPanel("nameGnomePanel");
-                    Debug.Log("After opening nameGnomePanel");
-                }
-            });
-
-            gnome.SetActive(true);
-            logoutButton.interactable = true;
-        });
-        Debug.Log("After sign in user called");
     }
 
     private void InitializeFirebase()
@@ -207,52 +128,27 @@ public class FirebaseAuthController : MonoBehaviour
 
     private void AuthStateChanged(object sender, EventArgs eventArgs)
     {
-        if (auth.CurrentUser != user)
-        {
-            bool signedIn = user != auth.CurrentUser && auth.CurrentUser != null && auth.CurrentUser.IsValid();
-            if (!signedIn && user != null)
-            {
-                Debug.Log($"Signed out {user.UserId}");
-            }
-            user = auth.CurrentUser;
-            if (signedIn)
-            {
-                Debug.Log($"Signed in {user.UserId}");
-                isSignIn = true;
-            }
-            else
-            {
-                Debug.Log("User is not signed in or authentication state changed.");
-            }
-        }
+        user = auth.CurrentUser;
+        isSignIn = user != null;
     }
 
-    private void CreateUser(string email, string password, string username)
+    public void CreateUser(string email, string password, string username)
     {
         auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
         {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
-                return;
-            }
-            if (task.IsFaulted)
+            if (task.IsCanceled || task.IsFaulted)
             {
                 HandleAuthError(task.Exception);
                 return;
             }
 
             AuthResult result = task.Result;
-            Debug.Log($"Firebase user created successfully: {username} ({result.User.UserId})");
-
             UpdateUserProfile(username);
 
-            Debug.Log("Before opening nameGnomePanel");
             OpenPanel("nameGnomePanel");
-            Debug.Log("After opening nameGnomePanel");
             gnome.SetActive(true);
             logoutButton.interactable = true;
-            ShowNotificationMessage("Alert", "Account Successfully Created");
+            // ShowNotificationMessage("Alert", "Account Successfully Created");
             databaseManager.CreateNewUser(username, result.User.Email, result.User.UserId);
         });
     }
@@ -269,11 +165,6 @@ public class FirebaseAuthController : MonoBehaviour
             };
             currentUser.UpdateUserProfileAsync(profile).ContinueWith(task =>
             {
-                if (task.IsCanceled)
-                {
-                    Debug.LogError("UpdateUserProfileAsync was canceled.");
-                    return;
-                }
                 if (task.IsFaulted)
                 {
                     Debug.LogError($"UpdateUserProfileAsync encountered an error: {task.Exception}");
@@ -285,10 +176,31 @@ public class FirebaseAuthController : MonoBehaviour
         }
     }
 
+    public void SignInUser(string email, string password, Action onSignInSuccess)
+    {
+        auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task => {
+            if (task.IsCanceled || task.IsFaulted)
+            {
+                HandleAuthError(task.Exception);
+                return;
+            }
+
+            Firebase.Auth.AuthResult result = task.Result;
+            Debug.Log($"User signed in successfully: {result.User.DisplayName} ({result.User.UserId})");
+            string userId = GetCurrentUserId();
+            databaseManager.GetStartGameStatus(userId, startGameStatus => {
+                string panelName = startGameStatus ? "gamePanel" : "nameGnomePanel";
+                OpenPanel(panelName);
+            });
+            // Call the callback function to notify the coroutine
+            onSignInSuccess?.Invoke();
+        });
+    }
+
     private void ShowNotificationMessage(string title, string message)
     {
-        notifTitleText.text = "" + title;
-        notifMessageText.text = "" + message;
+        notifTitleText.text = title;
+        notifMessageText.text = message;
         notificationPanel.SetActive(true);
     }
 
@@ -298,7 +210,7 @@ public class FirebaseAuthController : MonoBehaviour
         {
             if (innerException is FirebaseException firebaseEx)
             {
-                AuthError errorCode = (AuthError) firebaseEx.ErrorCode;
+                AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
                 ShowNotificationMessage("Error", GetErrorMessage(errorCode));
             }
         }
@@ -327,25 +239,6 @@ public class FirebaseAuthController : MonoBehaviour
         }
     }
 
-    private void ForgetPasswordSubmit(string forgetPasswordEmail)
-    {
-        auth.SendPasswordResetEmailAsync(forgetPasswordEmail).ContinueWithOnMainThread(task => {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("SendPasswordResetEmailAsync was canceled");
-            }
-
-            if (task.IsFaulted)
-            {
-                HandleAuthError(task.Exception);
-            }
-            
-            OpenPanel("loginPanel");
-            forgetPassInputFields[0].text = ""; // forgetPassEmail
-            ShowNotificationMessage("Alert", "Successfully sent email for resetting your password");
-        });
-    }
-
     private static bool AreInputFieldsEmpty(TMP_InputField[] fields)
     {
         foreach (TMP_InputField field in fields)
@@ -364,5 +257,35 @@ public class FirebaseAuthController : MonoBehaviour
         {
             field.text = "";
         }
+    }
+
+    public string GetCurrentUserId()
+    {
+        user = auth.CurrentUser;
+        if (user != null)
+        {
+            return user.UserId;
+        }
+        // TODO: Update for error handling
+        return null;
+    }
+
+    private void ForgetPasswordSubmit(string forgetPasswordEmail)
+    {
+        auth.SendPasswordResetEmailAsync(forgetPasswordEmail).ContinueWithOnMainThread(task => {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SendPasswordResetEmailAsync was canceled");
+            }
+
+            if (task.IsFaulted)
+            {
+                HandleAuthError(task.Exception);
+            }
+
+            OpenPanel("loginPanel");
+            forgetPassInputFields[0].text = ""; // forgetPassEmail
+            ShowNotificationMessage("Alert", "Successfully sent email for resetting your password");
+        });
     }
 }
