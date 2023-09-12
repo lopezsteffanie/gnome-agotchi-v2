@@ -82,9 +82,7 @@ public class DatabaseManager : MonoBehaviour
 
     public async Task<bool> GetStartGameStatus(string userId)
     {
-        Debug.Log($"userId: {userId}");
         var task = dbReference.Child("users").Child(userId).Child("startGameStatus").GetValueAsync();
-        Debug.Log($"task: {task}");
         
         // Await the Firebase task
         await task;
@@ -101,7 +99,6 @@ public class DatabaseManager : MonoBehaviour
             if (snapshot.Exists)
             {
                 string startGameStatusStr = snapshot.GetRawJsonValue();
-                Debug.Log($"startGameStatus: {startGameStatusStr}");
                 if (startGameStatusStr == "true")
                 {
                     return true;
@@ -128,5 +125,67 @@ public class DatabaseManager : MonoBehaviour
         // Default to false if none of the conditions above are met
         Debug.LogWarning("No conditions met to check startGameStatus, defaulting to false");
         return false;
+    }
+
+    public async Task<int> GetCurrentGnomeColorIndex(string userId)
+    {
+        try
+        {
+            // Get the gnomeId associated with the user
+            var gnomeIdSnapshot = await dbReference.Child("users").Child(userId).Child("gnome").GetValueAsync();
+            if (!gnomeIdSnapshot.Exists)
+            {
+                Debug.LogWarning("Gnome ID not found for the user.");
+                // TODO: Update to handle errors
+                return 0; // Default to index 0
+            }
+
+            string gnomeId = gnomeIdSnapshot.GetRawJsonValue().Trim('"'); // Trim double quotes
+            Debug.Log($"gnomeId: {gnomeId}");
+
+            // Get the gnome's data
+            string gnomeDataPath = string.Format("gnome/{0}", gnomeId);
+            Debug.Log($"gnome datapath: {gnomeDataPath}");
+            var gnomeSnapshot = await dbReference.Child(gnomeDataPath).GetValueAsync();
+            if (!gnomeSnapshot.Exists)
+            {
+                Debug.LogWarning("Gnome data not found.");
+                // TODO: Update to handle errors
+                return 0; // Default to index 0
+            }
+            Debug.Log("Gnome Data:");
+            Debug.Log(gnomeSnapshot.GetRawJsonValue());
+
+            // Check if "colorIndex" exists in the gnome's data
+            if (gnomeSnapshot.HasChild("colorIndex"))
+            {
+                // Retrieve the colorIndex
+                var colorIndexSnapshot = gnomeSnapshot.Child("colorIndex");
+                string colorIndexStr = colorIndexSnapshot.GetRawJsonValue();
+                Debug.Log($"ColorIndexStr: {colorIndexStr}");
+                if (int.TryParse(colorIndexStr, out int colorIndex))
+                {
+                    return colorIndex;
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid colorIndex value in the database");
+                    // TODO: Handle the case where colorIndex is not a valid integer
+                    return 0; // Default to index 0
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Color index not found for the gnome.");
+                // TODO: Update to handle errors
+                return 0; // Default to index 0
+            }
+        }
+        catch (AggregateException e)
+        {
+            Debug.LogError($"Error fetching gnome color index: {e.InnerException}");
+            // TODO: Handle error;
+            return 0; // Default to index 0
+        }
     }
 }

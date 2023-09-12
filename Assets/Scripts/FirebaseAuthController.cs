@@ -24,7 +24,7 @@ public class FirebaseAuthController : MonoBehaviour
     private void Start()
     {
         // Check and fix Firebase dependencies asynchronously
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
@@ -35,7 +35,7 @@ public class FirebaseAuthController : MonoBehaviour
             {
                 // Log an error if Firebase dependencies cannot be resolved
                 // TODO: Handle error
-                UnityEngine.Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                UnityEngine.Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
             }
         });
     }
@@ -73,10 +73,13 @@ public class FirebaseAuthController : MonoBehaviour
     // Get the current user's unique identifier
     public string GetCurrentUserId()
     {
-        user = auth.CurrentUser;
-        if (user != null)
+        if (auth != null)
         {
-            return user.UserId;
+            user = auth.CurrentUser;
+            if (user != null)
+            {
+                return user.UserId;
+            }
         }
         // TODO: Update for error handling
         return null;

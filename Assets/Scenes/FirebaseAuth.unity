@@ -6485,7 +6485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &995773113
 Transform:
   m_ObjectHideFlags: 0
@@ -10169,6 +10169,7 @@ MonoBehaviour:
   displayGnomeName: {fileID: 116871049}
   inputGnomeName: {fileID: 1420280648}
   inputField: {fileID: 1420280646}
+  gamePanel: {fileID: 1932040053}
   startGameButton: {fileID: 1502008216}
   confirmNameButton: {fileID: 281486047}
   resetNameButton: {fileID: 658963021}
@@ -10410,6 +10411,7 @@ MonoBehaviour:
   firebaseAuthController: {fileID: 673879978}
   backButton: {fileID: 337117356}
   submitButton: {fileID: 53641479}
+  loginPanel: {fileID: 442821971}
 --- !u!1 &1573426790
 GameObject:
   m_ObjectHideFlags: 0
@@ -10770,6 +10772,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2dd6ac81b934a809a9fefe8cd54e43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  databaseManager: {fileID: 673879977}
+  firebaseAuthController: {fileID: 673879978}
   gnomePrefabs:
   - {fileID: 21694560}
   - {fileID: 578273979}
@@ -12661,6 +12665,7 @@ MonoBehaviour:
   signUpEmail: {fileID: 73322382}
   signUpPassword: {fileID: 1452908927}
   signUpUsername: {fileID: 12046578}
+  loginPanel: {fileID: 442821971}
 --- !u!1 &1921018033
 GameObject:
   m_ObjectHideFlags: 0
