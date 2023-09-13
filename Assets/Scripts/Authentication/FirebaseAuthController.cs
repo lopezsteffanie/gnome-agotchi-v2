@@ -5,6 +5,7 @@ using TMPro;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Extensions;
+using UnityEngine.SceneManagement;
 
 public class FirebaseAuthController : MonoBehaviour
 {
@@ -106,6 +107,7 @@ public class FirebaseAuthController : MonoBehaviour
         logoutButton.interactable = false;
         isSignIn = false;
         isSigned = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // Creates a new user account with the provided email, password, and username
