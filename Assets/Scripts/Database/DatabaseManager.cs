@@ -31,7 +31,7 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    public async void CreateNewGnome(string name, int colorIndex, System.Action<string> onGnomeCreated)
+    public async void CreateNewGnome(string name, int colorIndex, int personalityIndex, System.Action<string> onGnomeCreated)
     {
         // Create a new Needs object and associate it with the Gnome
         Needs newNeeds = new Needs();
@@ -44,7 +44,7 @@ public class DatabaseManager : MonoBehaviour
             string needsId = needsReference.Key;
 
             // Create the Gnome object with the associated Needs Id
-            Gnome newGnome = new Gnome(name, colorIndex, needsId);
+            Gnome newGnome = new Gnome(name, colorIndex, needsId, personalityIndex);
             string gnomeJson = JsonUtility.ToJson(newGnome);
 
             DatabaseReference gnomeReference = dbReference.Child("gnome").Push();
@@ -184,6 +184,68 @@ public class DatabaseManager : MonoBehaviour
         catch (AggregateException e)
         {
             Debug.LogError($"Error fetching gnome color index: {e.InnerException}");
+            // TODO: Handle error;
+            return 0; // Default to index 0
+        }
+    }
+
+    public async Task<int> GetCurrentGnomePersonalityIndex(string userId)
+    {
+        try
+        {
+            // Get the gnomeId associated with the user
+            var gnomeIdSnapshot = await dbReference.Child("users").Child(userId).Child("gnome").GetValueAsync();
+            if (!gnomeIdSnapshot.Exists)
+            {
+                Debug.LogWarning("Gnome ID not found for the user.");
+                // TODO: Update to handle errors
+                return 0; // Default to index 0
+            }
+
+            string gnomeId = gnomeIdSnapshot.GetRawJsonValue().Trim('"'); // Trim double quotes
+            Debug.Log($"gnomeId: {gnomeId}");
+
+            // Get the gnome's data
+            string gnomeDataPath = string.Format("gnome/{0}", gnomeId);
+            Debug.Log($"gnome datapath: {gnomeDataPath}");
+            var gnomeSnapshot = await dbReference.Child(gnomeDataPath).GetValueAsync();
+            if (!gnomeSnapshot.Exists)
+            {
+                Debug.LogWarning("Gnome data not found.");
+                // TODO: Update to handle errors
+                return 0; // Default to index 0
+            }
+            Debug.Log("Gnome Data:");
+            Debug.Log(gnomeSnapshot.GetRawJsonValue());
+
+            // Check if "personalityIndex" exists in the gnome's data
+            if (gnomeSnapshot.HasChild("personalityIndex"))
+            {
+                // Retrieve the personalityIndex
+                var personalityIndexSnapshot = gnomeSnapshot.Child("personalityIndex");
+                string personalityIndexStr = personalityIndexSnapshot.GetRawJsonValue();
+                Debug.Log($"ColorIndexStr: {personalityIndexStr}");
+                if (int.TryParse(personalityIndexStr, out int personalityIndex))
+                {
+                    return personalityIndex;
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid personalityIndex value in the database");
+                    // TODO: Handle the case where colorIndex is not a valid integer
+                    return 0; // Default to index 0
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Personality index not found for the gnome.");
+                // TODO: Update to handle errors
+                return 0; // Default to index 0
+            }
+        }
+        catch (AggregateException e)
+        {
+            Debug.LogError($"Error fetching gnome personality index: {e.InnerException}");
             // TODO: Handle error;
             return 0; // Default to index 0
         }

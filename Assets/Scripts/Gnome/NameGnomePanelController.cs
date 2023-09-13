@@ -12,6 +12,7 @@ public class NameGnomePanelController : MonoBehaviour
     public Button startGameButton, confirmNameButton, resetNameButton;
     public FirebaseAuthController firebaseAuthController;
     public GnomeColorController gnomeColorController;
+    public GnomePersonalityController gnomePersonalityController;
     public DatabaseManager databaseManager;
 
     private string currentGnomeName = "";
@@ -51,6 +52,7 @@ public class NameGnomePanelController : MonoBehaviour
     private void OnStartGameButtonClick()
     {
         int colorIndex = gnomeColorController.GetSelectedGnomeIndex();
+        int personalityIndex = gnomePersonalityController.GetSelectedPersonalityIndex();
         string currentUser = firebaseAuthController.GetCurrentUserId();
         if (currentUser != null)
         {
@@ -58,7 +60,7 @@ public class NameGnomePanelController : MonoBehaviour
             firebaseAuthController.OpenPanel(gamePanel.name);
             Debug.Log("After OpenGamePanel");
             
-            databaseManager.CreateNewGnome(currentGnomeName, colorIndex, (gnomeId) =>
+            databaseManager.CreateNewGnome(currentGnomeName, colorIndex, personalityIndex, (gnomeId) =>
             {
                 databaseManager.UpdateUser(currentUser, gnomeId);
             });
