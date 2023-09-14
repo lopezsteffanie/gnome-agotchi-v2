@@ -101,7 +101,7 @@ This is a working update to my original Capstone Project that I created during m
   - **Emotional Needs:** Pets may have emotional needs such as companionship, security, or stimulation. Players should attend to these needs to keep their pets emotionally balanced.
   - **Recreation:** Pets might enjoy recreational activities like playing with toys, watching TV, or listening to music.
   - **Exploration:** Some pets have a curiosity for exploration. Players can provide opportunities for pets to explore new areas or objects.
-  - **Career or Hobby:** In more complex pet simulators, pets might have career aspirations or hobbies that players can help them pursue.
+
 
 ## ✅ Credits
 
