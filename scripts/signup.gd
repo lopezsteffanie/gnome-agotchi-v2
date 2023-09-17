@@ -8,7 +8,7 @@ extends Control
 @onready var input_confirm_password = $LineEdits/ConfirmPassword
 @onready var back_button = $Buttons/Back
 @onready var register_button = $Buttons/Register
-@onready var auth = preload("res://auth.gd").new()
+@onready var auth = preload("res://scripts/classes/auth.gd").new()
 
 func _ready():
 	http.request_completed.connect(_on_http_request_request_completed)

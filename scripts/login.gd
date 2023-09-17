@@ -7,7 +7,7 @@ extends Control
 @onready var http = $HTTPRequest
 @onready var input_email = $LineEdits/Email
 @onready var input_password = $LineEdits/Password
-@onready var auth = preload("res://auth.gd").new()
+@onready var auth = preload("res://scripts/classes/auth.gd").new()
 
 func _ready():
 	login_button.pressed.connect(_on_login_pressed)
