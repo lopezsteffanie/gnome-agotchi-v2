@@ -19,6 +19,14 @@ config/icon="res://icon.svg"
 
 Env="*res://dotenv/env.gd"
 
+[display]
+
+window/size/viewport_width=480
+window/size/viewport_height=270
+window/size/window_width_override=1440
+window/size/window_height_override=810
+window/stretch/mode="canvas_items"
+
 [dotnet]
 
 project/assembly_name="gnome-agotchi-v2"
