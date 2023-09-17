@@ -1,10 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dljwa8eu7l3t6"]
+[gd_scene load_steps=5 format=3 uid="uid://bll87oea4cwa0"]
 
-[ext_resource type="Script" path="res://scripts/login.gd" id="1_oxf6k"]
-[ext_resource type="FontFile" uid="uid://d0scthstgfocq" path="res://assets/fonts/Kenney Mini Square.ttf" id="2_8hqcw"]
+[ext_resource type="Script" path="res://scripts/signup.gd" id="1_11gr5"]
+[ext_resource type="FontFile" uid="uid://d0scthstgfocq" path="res://assets/fonts/Kenney Mini Square.ttf" id="1_xpa2a"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_wcbtr"]
-font = ExtResource("2_8hqcw")
+[sub_resource type="LabelSettings" id="LabelSettings_o72qc"]
+font = ExtResource("1_xpa2a")
 font_size = 64
 font_color = Color(0.478431, 0.560784, 0.976471, 1)
 outline_size = 8
@@ -13,19 +13,19 @@ shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.686275)
 shadow_offset = Vector2(1, 5)
 
-[sub_resource type="LabelSettings" id="LabelSettings_e4olf"]
-font = ExtResource("2_8hqcw")
+[sub_resource type="LabelSettings" id="LabelSettings_pk0ei"]
+font = ExtResource("1_xpa2a")
 font_size = 24
 font_color = Color(1, 0, 0, 1)
 
-[node name="Login" type="Control"]
+[node name="Signup" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_oxf6k")
+script = ExtResource("1_11gr5")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 1
@@ -41,12 +41,13 @@ offset_bottom = -124.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "GNOME-AGOTCHI"
-label_settings = SubResource("LabelSettings_wcbtr")
+label_settings = SubResource("LabelSettings_o72qc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LineEdits" type="VBoxContainer" parent="."]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -54,7 +55,7 @@ anchor_bottom = 0.5
 offset_left = -232.0
 offset_top = -102.0
 offset_right = 232.0
-offset_bottom = 20.0
+offset_bottom = 88.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -64,7 +65,7 @@ alignment = 1
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_constants/caret_width = 2
-theme_override_fonts/font = ExtResource("2_8hqcw")
+theme_override_fonts/font = ExtResource("1_xpa2a")
 theme_override_font_sizes/font_size = 20
 placeholder_text = "Enter your email..."
 clear_button_enabled = true
@@ -74,41 +75,53 @@ caret_blink = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_constants/caret_width = 2
-theme_override_fonts/font = ExtResource("2_8hqcw")
+theme_override_fonts/font = ExtResource("1_xpa2a")
 theme_override_font_sizes/font_size = 20
 placeholder_text = "Enter your password..."
 secret = true
 clear_button_enabled = true
 caret_blink = true
 
-[node name="Buttons" type="HBoxContainer" parent="."]
+[node name="ConfirmPassword" type="LineEdit" parent="LineEdits"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_constants/caret_width = 2
+theme_override_fonts/font = ExtResource("1_xpa2a")
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Confirm your password..."
+secret = true
+clear_button_enabled = true
+caret_blink = true
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -210.0
-offset_top = 61.0
+offset_top = 111.0
 offset_right = 210.0
-offset_bottom = 111.0
+offset_bottom = 161.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="Login" type="Button" parent="Buttons"]
+[node name="Back" type="Button" parent="Buttons"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_8hqcw")
+theme_override_fonts/font = ExtResource("1_xpa2a")
 theme_override_font_sizes/font_size = 24
-text = "LOGIN"
+text = "BACK"
 
-[node name="Signup" type="Button" parent="Buttons"]
+[node name="Register" type="Button" parent="Buttons"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_8hqcw")
+theme_override_fonts/font = ExtResource("1_xpa2a")
 theme_override_font_sizes/font_size = 24
-text = "SIGNUP"
+text = "REGISTER"
 
 [node name="ErrorMessage" type="Label" parent="."]
 layout_mode = 1
@@ -118,12 +131,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -241.0
-offset_top = 143.0
+offset_top = 193.0
 offset_right = 241.0
-offset_bottom = 234.0
+offset_bottom = 284.0
 grow_horizontal = 2
 grow_vertical = 2
-label_settings = SubResource("LabelSettings_e4olf")
+label_settings = SubResource("LabelSettings_pk0ei")
 horizontal_alignment = 1
 vertical_alignment = 1
 
