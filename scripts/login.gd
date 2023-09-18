@@ -10,6 +10,8 @@ extends Control
 @onready var input_password = $LineEdits/Password
 @onready var auth = preload("res://scripts/classes/auth.gd").new()
 
+var jwt_token
+
 func _ready():
 	login_button.pressed.connect(_on_login_pressed)
 	signup_button.pressed.connect(_on_signup_pressed)
@@ -20,15 +22,17 @@ func _ready():
 
 func _on_http_request_request_completed(result, response_code, headers, body):
 	var response = JSON.parse_string(body.get_string_from_utf8())
-	# If request is ok
+	
 	if (response_code == 200 || response_code == 201):
 		print(response)
+		jwt_token = response.token
+		save_token_to_file()
 		error_message.text = ""
 		input_email.text = ""
 		input_password.text = ""
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 	else:
-		printerr(response.error)
+		printerr(response)
 		error_message.text = response.error
 
 func _on_login_pressed():
@@ -43,3 +47,9 @@ func _on_forgotpassword_pressed():
 
 func _on_input_text():
 	error_message.text = ""
+
+func save_token_to_file(overwrite: bool = true):
+	var config = ConfigFile.new()
+	
+	config.set_value("auth", "token", jwt_token)
+	config.save("user://token.cfg")
