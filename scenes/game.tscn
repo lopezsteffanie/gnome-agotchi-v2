@@ -1,3 +1,21 @@
-[gd_scene format=3 uid="uid://bo277xcr31sa8"]
+[gd_scene load_steps=4 format=3 uid="uid://bo277xcr31sa8"]
+
+[ext_resource type="PackedScene" uid="uid://di70yg2cmkpfk" path="res://scenes/bg.tscn" id="1_5xeu7"]
+[ext_resource type="PackedScene" uid="uid://dsiqebki5axc8" path="res://scenes/gnome.tscn" id="2_i8hdh"]
+[ext_resource type="PackedScene" uid="uid://brno11ahpmpe8" path="res://hud.tscn" id="3_nw6of"]
 
 [node name="Game" type="Node2D"]
+
+[node name="BG" parent="." instance=ExtResource("1_5xeu7")]
+
+[node name="Gnome" parent="." instance=ExtResource("2_i8hdh")]
+position = Vector2(227, 159)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 270.0
+
+[node name="HUD" parent="Control" instance=ExtResource("3_nw6of")]
+layout_mode = 1
