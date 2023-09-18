@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/name_gnome.gd" id="1_443yq"]
 [ext_resource type="PackedScene" uid="uid://di70yg2cmkpfk" path="res://scenes/bg.tscn" id="1_dyhxw"]
 [ext_resource type="Texture2D" uid="uid://u0yop8h5egu2" path="res://assets/textures/bg/Blue.png" id="2_mt0f1"]
-[ext_resource type="PackedScene" uid="uid://dsiqebki5axc8" path="res://scenes/gnome.tscn" id="3_k3210"]
+[ext_resource type="PackedScene" uid="uid://c01ylhumgt4nq" path="res://scenes/gnome.tscn" id="3_k3210"]
 [ext_resource type="FontFile" uid="uid://d0scthstgfocq" path="res://assets/fonts/Kenney Mini Square.ttf" id="3_n0qap"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_scnwi"]
