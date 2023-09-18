@@ -162,4 +162,8 @@ horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 1
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="LoginRequest" type="HTTPRequest" parent="."]
+
+[node name="GetGnomeIdRequest" type="HTTPRequest" parent="."]
+
+[node name="GetGnomeRequest" type="HTTPRequest" parent="."]
