@@ -394,11 +394,14 @@ script = ExtResource("1_vc4jy")
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-visible = false
 sprite_frames = SubResource("SpriteFrames_hyqmr")
 animation = &"blue"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CapsuleShape2D_etgf2")
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="CreateGnomeRequest" type="HTTPRequest" parent="."]
+
+[node name="GetGnomeIdRequest" type="HTTPRequest" parent="."]
+
+[node name="GetGnomeRequest" type="HTTPRequest" parent="."]

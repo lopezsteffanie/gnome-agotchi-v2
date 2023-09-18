@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://deijyrrbv2ivf"]
+
+[ext_resource type="PackedScene" uid="uid://di70yg2cmkpfk" path="res://scenes/bg.tscn" id="1_dyhxw"]
+[ext_resource type="Texture2D" uid="uid://u0yop8h5egu2" path="res://assets/textures/bg/Blue.png" id="2_mt0f1"]
+[ext_resource type="PackedScene" uid="uid://dsiqebki5axc8" path="res://scenes/gnome.tscn" id="3_k3210"]
+
+[node name="NameGnome" type="Node2D"]
+
+[node name="BG" parent="." instance=ExtResource("1_dyhxw")]
+bg_texture = ExtResource("2_mt0f1")
+
+[node name="Gnome" parent="." instance=ExtResource("3_k3210")]
+position = Vector2(227, 159)

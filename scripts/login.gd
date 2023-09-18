@@ -30,7 +30,7 @@ func _on_http_request_request_completed(result, response_code, headers, body):
 		error_message.text = ""
 		input_email.text = ""
 		input_password.text = ""
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		get_tree().change_scene_to_file("res://scenes/name_gnome.tscn")
 	else:
 		printerr(response)
 		error_message.text = response.error
@@ -48,7 +48,7 @@ func _on_forgotpassword_pressed():
 func _on_input_text():
 	error_message.text = ""
 
-func save_token_to_file(overwrite: bool = true):
+func save_token_to_file():
 	var config = ConfigFile.new()
 	
 	config.set_value("auth", "token", jwt_token)
