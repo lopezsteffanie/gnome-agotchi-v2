@@ -1,26 +1,39 @@
 extends Node2D
 
+# Define API URL
 @onready var api_url = Env.get_value("API_URL")
+
+# Reference to HTTP requests
 @onready var createGnome = $CreateGnomeRequest
 @onready var getGnomeId = $GetGnomeIdRequest
 @onready var getGnomeRequest = $GetGnomeRequest
+
+# Gnome sprite animation
 @onready var animated_sprite = $CharacterBody2D/AnimatedSprite2D
 
-var color
-var personality
-var jwt_token
+# Gnome attributes
+var color = ""
+var personality = ""
+var jwt_token = ""
 
 func _ready():
+	# Initialize the scene
 	animated_sprite.visible = false
+	
+	# Connect request completion signals
 	createGnome.request_completed.connect(_on_create_gnome_request_completed)
 	getGnomeId.request_completed.connect(_on_get_gnome_id_request_completed)
 	getGnomeRequest.request_completed.connect(_on_get_gnome_request_completed)
-	load_token_from_file()
-	get_gnome_id()
 	
+	# Load JWT token from file
+	load_token_from_file()
+	
+	# Attempt to retrieve the gnome ID
+	get_gnome_id()
+
+# Event handlers	
 func _on_create_gnome_request_completed(result, response_code, headers, body):
 	var response = JSON.parse_string(body.get_string_from_utf8())
-	# If request is ok
 	if (response_code == 201):
 		color = response.color
 		personality = response["personality"]["name"]
@@ -32,7 +45,6 @@ func _on_create_gnome_request_completed(result, response_code, headers, body):
 
 func _on_get_gnome_id_request_completed(result, response_code, headers, body):
 	var response = JSON.parse_string(body.get_string_from_utf8())
-	# If request is ok
 	if (response_code == 200):
 		var gnome_id = response.gnome_id
 		get_gnome_from_id(gnome_id)
@@ -42,7 +54,6 @@ func _on_get_gnome_id_request_completed(result, response_code, headers, body):
 		
 func _on_get_gnome_request_completed(result, response_code, headers, body):
 	var response = JSON.parse_string(body.get_string_from_utf8())
-	# If request is ok
 	if (response_code == 200):
 		var gnome = response.gnome
 		color = gnome["color"]
@@ -53,6 +64,7 @@ func _on_get_gnome_request_completed(result, response_code, headers, body):
 	else:
 		printerr(response)
 		
+# Helper functions
 func load_token_from_file():
 	var config = ConfigFile.new()
 	
