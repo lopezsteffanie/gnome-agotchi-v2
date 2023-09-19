@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://brno11ahpmpe8"]
+[gd_scene load_steps=7 format=3 uid="uid://brno11ahpmpe8"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_hqidi"]
 [ext_resource type="Texture2D" uid="uid://bf5syqpecpg0o" path="res://icon.svg" id="1_jmswg"]
@@ -6,6 +6,15 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ikwn"]
 bg_color = Color(1, 1, 1, 0.392157)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dnwfi"]
+line_spacing = 0.0
+font = ExtResource("3_140il")
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_we10w"]
+font = ExtResource("3_140il")
+font_size = 14
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -40,23 +49,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2ikwn")
 
-[node name="LogoutButton" type="Button" parent="SettingsPanel"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -30.0
-offset_top = -42.0
-offset_right = 30.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("3_140il")
-theme_override_font_sizes/font_size = 14
-text = "LOGOUT"
-
 [node name="CloseSettingsButton" type="Button" parent="SettingsPanel"]
 layout_mode = 1
 anchors_preset = 1
@@ -68,9 +60,318 @@ grow_horizontal = 0
 theme_override_fonts/font = ExtResource("3_140il")
 text = "X"
 
+[node name="Audio" type="Label" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.0
+offset_top = 43.0
+offset_right = -25.0
+offset_bottom = 66.0
+grow_horizontal = 2
+text = "AUDIO"
+label_settings = SubResource("LabelSettings_dnwfi")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AudioSlider" type="HSlider" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 46.0
+offset_right = 171.0
+offset_bottom = 63.0
+value = 50.0
+
+[node name="SFX" type="Label" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.0
+offset_top = 68.0
+offset_right = -25.0
+offset_bottom = 91.0
+grow_horizontal = 2
+text = "SFX"
+label_settings = SubResource("LabelSettings_dnwfi")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 71.0
+offset_right = 171.0
+offset_bottom = 88.0
+value = 50.0
+
+[node name="LogoutButton" type="Button" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -42.0
+offset_right = 70.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_140il")
+theme_override_font_sizes/font_size = 14
+text = "LOGOUT"
+
+[node name="SaveButton" type="Button" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -42.0
+offset_right = -10.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_140il")
+theme_override_font_sizes/font_size = 14
+text = "SAVE"
+
+[node name="CharacterStatsButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -42.0
+offset_top = 15.0
+offset_right = 86.0
+offset_bottom = 143.0
+grow_horizontal = 0
+scale = Vector2(0.2, 0.2)
+texture_normal = ExtResource("1_jmswg")
+
+[node name="CharacterStatsPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -88.0
+offset_right = 90.0
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2ikwn")
+
+[node name="ClosePanelButton" type="Button" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -28.0
+offset_bottom = 28.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("3_140il")
+text = "X"
+
+[node name="Name" type="Label" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -24.0
+offset_top = 11.0
+offset_right = 24.0
+offset_bottom = 34.0
+grow_horizontal = 2
+text = "ALBUS"
+label_settings = SubResource("LabelSettings_we10w")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Health" type="Label" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.0
+offset_top = 43.0
+offset_right = -25.0
+offset_bottom = 66.0
+grow_horizontal = 2
+text = "HEALTH"
+label_settings = SubResource("LabelSettings_dnwfi")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -42.0
+offset_right = 81.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_140il")
+theme_override_font_sizes/font_size = 10
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="Happiness" type="Label" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.0
+offset_top = 68.0
+offset_right = -25.0
+offset_bottom = 91.0
+grow_horizontal = 2
+text = "HAPPINESS"
+label_settings = SubResource("LabelSettings_dnwfi")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HappinessBar" type="ProgressBar" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -17.0
+offset_right = 81.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_140il")
+theme_override_font_sizes/font_size = 10
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="Energy" type="Label" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.0
+offset_top = 93.0
+offset_right = -25.0
+offset_bottom = 116.0
+grow_horizontal = 2
+text = "ENERGY"
+label_settings = SubResource("LabelSettings_dnwfi")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="EnergyBar" type="ProgressBar" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = 8.0
+offset_right = 81.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_140il")
+theme_override_font_sizes/font_size = 10
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="Creativity" type="Label" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.0
+offset_top = 118.0
+offset_right = -25.0
+offset_bottom = 141.0
+grow_horizontal = 2
+text = "CREATIVITY"
+label_settings = SubResource("LabelSettings_dnwfi")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CreativityBar" type="ProgressBar" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = 33.0
+offset_right = 81.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_140il")
+theme_override_font_sizes/font_size = 10
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="Friendship" type="Label" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.0
+offset_top = 143.0
+offset_right = -25.0
+offset_bottom = 166.0
+grow_horizontal = 2
+text = "FRIENDSHIP"
+label_settings = SubResource("LabelSettings_dnwfi")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="FriendshipBar" type="ProgressBar" parent="CharacterStatsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = 58.0
+offset_right = 81.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_140il")
+theme_override_font_sizes/font_size = 10
+step = 1.0
+value = 50.0
+show_percentage = false
+
 [node name="LogoutRequest" type="HTTPRequest" parent="."]
 
 [connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="SettingsPanel/LogoutButton" to="." method="_on_logout_button_pressed"]
 [connection signal="pressed" from="SettingsPanel/CloseSettingsButton" to="." method="_on_close_settings_button_pressed"]
+[connection signal="value_changed" from="SettingsPanel/AudioSlider" to="." method="_on_audio_slider_value_changed"]
+[connection signal="value_changed" from="SettingsPanel/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="SettingsPanel/LogoutButton" to="." method="_on_logout_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="CharacterStatsButton" to="." method="_on_character_stats_button_pressed"]
+[connection signal="pressed" from="CharacterStatsPanel/ClosePanelButton" to="." method="_on_close_panel_button_pressed"]
 [connection signal="request_completed" from="LogoutRequest" to="." method="_on_logout_request_request_completed"]
