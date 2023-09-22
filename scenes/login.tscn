@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dljwa8eu7l3t6"]
+[gd_scene load_steps=6 format=3 uid="uid://dljwa8eu7l3t6"]
 
 [ext_resource type="Script" path="res://scripts/login.gd" id="1_oxf6k"]
 [ext_resource type="FontFile" uid="uid://d0scthstgfocq" path="res://assets/fonts/Kenney Mini Square.ttf" id="2_8hqcw"]
-[ext_resource type="PackedScene" uid="uid://di70yg2cmkpfk" path="res://scenes/bg.tscn" id="2_c5asn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sjl5f"]
 bg_color = Color(1, 1, 1, 0.392157)
@@ -27,7 +26,7 @@ font = ExtResource("2_8hqcw")
 font_size = 14
 font_color = Color(1, 0, 0, 1)
 
-[node name="Login" type="Control"]
+[node name="Login" type="Control" node_paths=PackedStringArray("error_message", "login_button", "signup_button", "forgot_password_button", "input_email", "input_password", "login_request", "gnome_id_request", "gnome_request")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,8 +34,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_oxf6k")
-
-[node name="BG" parent="." instance=ExtResource("2_c5asn")]
+error_message = NodePath("ErrorMessage")
+login_button = NodePath("Buttons/AuthButtons/Login")
+signup_button = NodePath("Buttons/AuthButtons/Signup")
+forgot_password_button = NodePath("Buttons/Forgot Password")
+input_email = NodePath("LineEdits/Email")
+input_password = NodePath("LineEdits/Password")
+login_request = NodePath("LoginRequest")
+gnome_id_request = NodePath("GetGnomeIdRequest")
+gnome_request = NodePath("GetGnomeRequest")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -157,6 +163,7 @@ offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(445, 16)
+text = "ERROR MESSAGE"
 label_settings = SubResource("LabelSettings_e4olf")
 horizontal_alignment = 1
 vertical_alignment = 2

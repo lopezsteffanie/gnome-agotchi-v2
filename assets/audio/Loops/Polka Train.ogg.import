@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b1ows4v1itx7v"
+path="res://.godot/imported/Polka Train.ogg-513dd941fa35c1df80bee0407d66b38e.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/Loops/Polka Train.ogg"
+dest_files=["res://.godot/imported/Polka Train.ogg-513dd941fa35c1df80bee0407d66b38e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

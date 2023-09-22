@@ -388,8 +388,13 @@ animations = [{
 radius = 28.0
 height = 64.0
 
-[node name="Gnome" type="Node2D"]
+[node name="Gnome" type="Node2D" node_paths=PackedStringArray("create_gnome_request", "get_gnome_id_request", "get_gnome_request", "animated_sprite")]
+position = Vector2(230, 120)
 script = ExtResource("1_w4don")
+create_gnome_request = NodePath("CreateGnomeRequest")
+get_gnome_id_request = NodePath("GetGnomeIdRequest")
+get_gnome_request = NodePath("GetGnomeRequest")
+animated_sprite = NodePath("CharacterBody2D/AnimatedSprite2D")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 

@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1t4ayivgl1dy"]
+
+[ext_resource type="PackedScene" uid="uid://di70yg2cmkpfk" path="res://scenes/bg.tscn" id="1_4end6"]
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_vlqwa"]
+[ext_resource type="AudioStream" uid="uid://bw7vhs0vtbeak" path="res://assets/audio/Loops/Cheerful Annoyance.ogg" id="3_v3mmv"]
+
+[node name="World" type="Node"]
+script = ExtResource("1_vlqwa")
+
+[node name="BG" parent="." instance=ExtResource("1_4end6")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_v3mmv")
+autoplay = true

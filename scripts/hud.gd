@@ -1,13 +1,15 @@
 extends Control
 
-@onready var api_url = Env.get_value("API_URL")
-@onready var auth = preload("res://scripts/classes/auth.gd").new()
+@export_group("UI Elements")
 @onready var settings_panel = $SettingsPanel
 @onready var settings_btn = $SettingsButton
 @onready var logout_req = $LogoutRequest
 @onready var stats_panel = $CharacterStatsPanel
 @onready var stats_btn = $CharacterStatsButton
 @onready var close_stats_btn = $CharacterStatsPanel/ClosePanelButton
+
+@onready var api_url = Env.get_value("API_URL")
+@onready var auth = preload("res://scripts/classes/auth.gd").new()
 
 var jwt_token = ""
 var gnome_data = ""

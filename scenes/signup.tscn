@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bll87oea4cwa0"]
+[gd_scene load_steps=6 format=3 uid="uid://bll87oea4cwa0"]
 
 [ext_resource type="Script" path="res://scripts/signup.gd" id="1_11gr5"]
 [ext_resource type="FontFile" uid="uid://d0scthstgfocq" path="res://assets/fonts/Kenney Mini Square.ttf" id="1_xpa2a"]
-[ext_resource type="PackedScene" uid="uid://di70yg2cmkpfk" path="res://scenes/bg.tscn" id="2_gjli3"]
-[ext_resource type="Texture2D" uid="uid://clb6tg0aopk4x" path="res://assets/textures/bg/Pink.png" id="3_3x3fw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrywk"]
 bg_color = Color(1, 1, 1, 0.392157)
@@ -28,7 +26,7 @@ font = ExtResource("1_xpa2a")
 font_size = 14
 font_color = Color(1, 0, 0, 1)
 
-[node name="Signup" type="Control"]
+[node name="Signup" type="Control" node_paths=PackedStringArray("error_message", "input_email", "input_password", "input_confirm_password", "back_button", "register_button", "signup_request")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,9 +34,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_11gr5")
-
-[node name="BG" parent="." instance=ExtResource("2_gjli3")]
-bg_texture = ExtResource("3_3x3fw")
+error_message = NodePath("ErrorMessage")
+input_email = NodePath("LineEdits/Email")
+input_password = NodePath("LineEdits/Password")
+input_confirm_password = NodePath("LineEdits/ConfirmPassword")
+back_button = NodePath("Buttons/Back")
+register_button = NodePath("Buttons/Register")
+signup_request = NodePath("HTTPRequest")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -153,6 +155,7 @@ offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(445, 16)
+text = "ERROR MESSAGE"
 label_settings = SubResource("LabelSettings_mf85s")
 horizontal_alignment = 1
 vertical_alignment = 2

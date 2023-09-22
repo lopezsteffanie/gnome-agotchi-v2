@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cjvuvxtnctsyr"
+path="res://.godot/imported/Farm Frolics.ogg-bfcc40d92f9369af2cae70f1df8c593f.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/Loops/Farm Frolics.ogg"
+dest_files=["res://.godot/imported/Farm Frolics.ogg-bfcc40d92f9369af2cae70f1df8c593f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

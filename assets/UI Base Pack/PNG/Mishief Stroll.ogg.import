@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cb7d2jpkiaaf7"
+path="res://.godot/imported/Mishief Stroll.ogg-404c47512f0a6b19b53b45283945b79c.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/UI Base Pack/PNG/Mishief Stroll.ogg"
+dest_files=["res://.godot/imported/Mishief Stroll.ogg-404c47512f0a6b19b53b45283945b79c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
