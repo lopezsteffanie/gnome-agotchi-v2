@@ -19,6 +19,7 @@ extends Node2D
 var color: String = ""
 var personality: String = ""
 var jwt_token: String = ""
+var age: int
 
 func _ready():
 	# Initialize the scene
@@ -40,6 +41,7 @@ func _ready():
 func _on_create_gnome_request_completed(result, response_code, headers, body):
 	var response = api.get_response(body)
 	if api.is_response_valid(response_code):
+		print("Gnome: " response)
 		color = response.color
 		personality = response["personality"]["name"]
 		load_and_save_gnome(color, personality)
@@ -63,6 +65,7 @@ func _on_get_gnome_request_completed(result, response_code, headers, body):
 		var gnome: Dictionary = response.gnome
 		color = gnome["color"]
 		personality = gnome["personality"]["name"]
+		age = gnome["age"]
 		load_and_save_gnome(color, personality)
 	else:
 		printerr(response)

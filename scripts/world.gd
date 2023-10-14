@@ -5,18 +5,24 @@ extends Node
 @onready var name_gnome_scene: PackedScene = preload("res://scenes/name_gnome.tscn")
 @onready var signup_scene: PackedScene = preload("res://scenes/signup.tscn")
 @onready var forgot_password_scene: PackedScene = preload("res://scenes/forgot_password.tscn")
+@onready var hud_scene: PackedScene = preload("res://scenes/hud.tscn")
 
 var login_instance: Node
 var gnome_instance: Node
 var name_gnome_instance: Node
 var signup_instance: Node
 var forgot_password_instance: Node
+var hud_instance: Node
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_login_instance()
 
 func _on_login_completed():
 	add_gnome_instance()
+	hud_instance = hud_scene.instantiate()
+	hud_instance.get_child(1).logout_completed.connect(_on_logout)
+	hud_instance.get_child(1).save_clicked.connect(_on_save)
+	add_child(hud_instance)
 	remove_child(login_instance)
 	
 func _on_signup_completed():
@@ -45,6 +51,15 @@ func _on_left_forgot_password_page():
 func _on_left_signup_page():
 	add_login_instance()
 	remove_child(signup_instance)
+	
+func _on_logout():
+	add_login_instance()
+	remove_child(hud_instance)
+	remove_child(gnome_instance)
+	
+func _on_save():
+	## FIXME
+	print("Save complete")
 	
 func add_login_instance():
 	login_instance = login_scene.instantiate()

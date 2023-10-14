@@ -35,14 +35,27 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -24.0
+offset_left = -125.0
 offset_top = 11.0
-offset_right = 24.0
+offset_right = 48.0
 offset_bottom = 34.0
 grow_horizontal = 2
-text = "ALBUS"
+text = "NAME: ALBUS"
 label_settings = SubResource("LabelSettings_a6y7x")
-horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Age" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 65.0
+offset_top = 11.0
+offset_right = 125.0
+offset_bottom = 34.0
+grow_horizontal = 2
+text = "AGE: 0"
+label_settings = SubResource("LabelSettings_a6y7x")
 vertical_alignment = 1
 
 [node name="Health" type="Label" parent="."]

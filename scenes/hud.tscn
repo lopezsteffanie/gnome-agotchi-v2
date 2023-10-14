@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://brno11ahpmpe8"]
+[gd_scene load_steps=9 format=3 uid="uid://brno11ahpmpe8"]
 
-[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hqidi"]
 [ext_resource type="Texture2D" uid="uid://4n0p580xlblj" path="res://assets/Game Icons/PNG/White/1x/gear.png" id="4_fjsyd"]
 [ext_resource type="Texture2D" uid="uid://biewk13byx1k8" path="res://assets/Game Icons/PNG/White/1x/medal2.png" id="5_aisfj"]
 [ext_resource type="Texture2D" uid="uid://ctuo1crd06y0q" path="res://assets/Game Icons/PNG/White/1x/menuGrid.png" id="6_e858k"]
@@ -38,7 +37,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_hqidi")
 
 [node name="TabBar" type="TabBar" parent="."]
 z_index = 5
@@ -63,14 +61,31 @@ tab_2/title = ""
 tab_2/icon = ExtResource("6_e858k")
 
 [node name="SettingsPanel" parent="." instance=ExtResource("7_b3rfe")]
+z_index = 10
 layout_mode = 1
 
 [node name="StatsPanel" parent="." instance=ExtResource("6_lm1qy")]
 visible = false
 layout_mode = 0
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="InventoryPanel" parent="." instance=ExtResource("7_e1wvb")]
 visible = false
 layout_mode = 0
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://v1l27or2a38e"]
+[gd_scene load_steps=6 format=3 uid="uid://v1l27or2a38e"]
 
 [ext_resource type="Script" path="res://scripts/settings_panel.gd" id="1_qeqd3"]
 [ext_resource type="FontFile" uid="uid://d0scthstgfocq" path="res://assets/fonts/Kenney Mini Square.ttf" id="1_uaqrt"]
+[ext_resource type="PackedScene" uid="uid://bgo2y7eggyyfh" path="res://scenes/audio_slider.tscn" id="3_k2s1a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxbjl"]
 bg_color = Color(1, 1, 1, 0.52549)
@@ -15,7 +16,7 @@ line_spacing = 0.0
 font = ExtResource("1_uaqrt")
 font_size = 10
 
-[node name="SettingsPanel" type="Panel"]
+[node name="SettingsPanel" type="Panel" node_paths=PackedStringArray("logout_button", "save_button", "logout_request")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -27,8 +28,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nxbjl")
 script = ExtResource("1_qeqd3")
+logout_button = NodePath("LogoutButton")
+save_button = NodePath("SaveButton")
+logout_request = NodePath("HTTPRequest")
 
-[node name="Audio" type="Label" parent="."]
+[node name="Music" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -43,12 +47,13 @@ label_settings = SubResource("LabelSettings_ouhkp")
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="AudioSlider" type="HSlider" parent="."]
-offset_left = 111.0
-offset_top = 35.0
-offset_right = 215.0
-offset_bottom = 52.0
-value = 50.0
+[node name="MusicSlider" parent="." instance=ExtResource("3_k2s1a")]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 36.0
+offset_right = 209.0
+offset_bottom = 53.0
+bus_name = "music"
 
 [node name="SFX" type="Label" parent="."]
 layout_mode = 1
@@ -65,12 +70,13 @@ label_settings = SubResource("LabelSettings_ouhkp")
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="SFXSlider" type="HSlider" parent="."]
-offset_left = 111.0
+[node name="SFXSlider" parent="." instance=ExtResource("3_k2s1a")]
+layout_mode = 0
+offset_left = 105.0
 offset_top = 60.0
-offset_right = 215.0
+offset_right = 209.0
 offset_bottom = 77.0
-value = 50.0
+bus_name = "sfx"
 
 [node name="LogoutButton" type="Button" parent="."]
 layout_mode = 1
@@ -105,3 +111,5 @@ grow_vertical = 0
 theme_override_fonts/font = ExtResource("1_uaqrt")
 theme_override_font_sizes/font_size = 14
 text = "SAVE"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
